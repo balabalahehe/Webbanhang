@@ -38,8 +38,7 @@ class NhaCungCapController extends Controller
     public function store(Request $request)
     {
         // dd($request->toArray());
-        for($i = 0; $i <= 100000; $i++){
-            $data = NhaCungCap::create([
+        $data = NhaCungCap::create([
                 'tenNhaCungCap'     => $request->tenNhaCungCap,
                 'diaChi'            => $request->diaChi,
                 'soDienThoai'       => $request->soDienThoai,
@@ -47,8 +46,9 @@ class NhaCungCapController extends Controller
                 'maSoThue'          => $request->maSoThue,
                 'tinhTrang'         => 1,
                 'tenNguoiDaiDien'   => $request->tenNguoiDaiDien,
-            ]);
-        }
+        ]);
+
+        toastr()->success('Ê, Thêm được rồi đó hỉ');
 
         return redirect()->Route('indexNhaCungCap');
     }
