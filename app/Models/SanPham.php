@@ -8,8 +8,15 @@ class SanPham extends Model
 {
     protected $table = 'san_phams';
     protected $fillable = [
-        'tenLoaiSanPham',
-        'slugLoaiSanPham',
+        'tenSanPham',
+        'slugTenSanPham',
+        'hinhAnh',
+        'moTaNgan',
+        'moTaDai',
+        'loaiSanPham_id',
+        'trongLuong',
+        'giaKhuyenMai',
+        'giaBan',
         'tinhTrang',
     ];
 

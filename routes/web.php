@@ -17,4 +17,11 @@ use Illuminate\Support\Facades\Route;
 Route::prefix('/admin')->group(function () {
     Route::get('/nhacungcap', 'NhaCungCapController@index')->name('indexNhaCungCap');
     Route::post('/nhacungcap', 'NhaCungCapController@store')->name('themNhaCungCap');
+
+    Route::get('/loaisanpham', 'LoaiSanPhamController@index')->name('indexLoaiSanPham');
+    Route::post('/loaisanphamindex', 'LoaiSanPhamController@store')->name('themLoaiSanPham');
+
+    Route::get('/loaisanpham/{id}', 'LoaiSanPhamController@edit')->name('editLoaiSanPham');
+    Route::post('/loaisanphamupdate', 'LoaiSanPhamController@update')->name('updateLoaiSanPham');
+
 });

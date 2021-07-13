@@ -6,17 +6,11 @@ use Illuminate\Database\Eloquent\Model;
 
 class LoaiSanPham extends Model
 {
-    protected $table = 'san_phams';
+    protected $table = 'loai_san_phams';
+
     protected $fillable = [
-        'tenSanPham',
-        'slugTenSanPham',
-        'hinhAnh',
-        'moTaNgan',
-        'moTaDai',
-        'loaiSanPham_id',
-        'trongLuong',
-        'giaKhuyenMai',
-        'giaBan',
+        'tenLoaiSanPham',
+        'slugLoaiSanPham',
         'tinhTrang',
     ];
 }

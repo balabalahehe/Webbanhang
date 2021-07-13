@@ -2,9 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\LoaiSanPham;
+use App\Http\Requests\themMoiLoaiSanPhamRequest;
+use App\Models\LoaiSanPham;
 use Illuminate\Http\Request;
-
+use Illuminate\Support\Str;
 class LoaiSanPhamController extends Controller
 {
     /**
@@ -14,7 +15,9 @@ class LoaiSanPhamController extends Controller
      */
     public function index()
     {
-        //
+        $data = LoaiSanPham::paginate(10);
+        $loaiSanPham = null;
+        return view('admin.loaisanpham.index', compact('data', 'loaiSanPham'));
     }
 
     /**
@@ -33,9 +36,17 @@ class LoaiSanPhamController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(themMoiLoaiSanPhamRequest $request)
     {
-        //
+        LoaiSanPham::create([
+            'tenLoaiSanPham'    => $request->tenLoaiSanPham,
+            'slugLoaiSanPham'   => Str::slug($request->tenLoaiSanPham),
+            'tinhTrang'         => 1,
+        ]);
+
+        toastr()->success('Thêm mới loại sản phẩm thành công');
+
+        return redirect()->Route('indexLoaiSanPham');
     }
 
     /**
@@ -55,9 +66,16 @@ class LoaiSanPhamController extends Controller
      * @param  \App\LoaiSanPham  $loaiSanPham
      * @return \Illuminate\Http\Response
      */
-    public function edit(LoaiSanPham $loaiSanPham)
+    public function edit($id)
     {
-        //
+        $loaiSanPham = LoaiSanPham::find($id);
+        if(!empty($loaiSanPham)){
+            $data = LoaiSanPham::paginate(10);
+            return view('admin.loaisanpham.index', compact('data', 'loaiSanPham'));
+        } else {
+            toastr()->error('Đi đâu thế bạn???');
+            return redirect()->route('indexLoaiSanPham');
+        }
     }
 
     /**
@@ -67,9 +85,9 @@ class LoaiSanPhamController extends Controller
      * @param  \App\LoaiSanPham  $loaiSanPham
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, LoaiSanPham $loaiSanPham)
+    public function update(themMoiLoaiSanPhamRequest $request)
     {
-        //
+        dd($request->toArray());
     }
 
     /**

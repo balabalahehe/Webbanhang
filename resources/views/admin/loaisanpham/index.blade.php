@@ -19,28 +19,12 @@
             <div class="col-md-3">
                 <div class="main-card mb-3 card">
                     <div class="card-body">
-                        <h5 class="card-title">Thông Tin Nhà Cung Cấp</h5>
-                        <form method="post" action="{{ Route('themNhaCungCap') }}">
+                        <h5 class="card-title">Thêm Mới Loại Sản Phẩm</h5>
+                        <form method="post" action="{{ Route('themLoaiSanPham') }}">
                             @csrf
                             <div class="position-relative form-group">
-                                <label class="">Tên Nhà Cung Cấp</label>
-                                <input name="tenNhaCungCap" class="form-control">
-                            </div>
-                            <div class="position-relative form-group">
-                                <label class="">Địa Chỉ</label>
-                                <input name="diaChi" class="form-control">
-                            </div>
-                            <div class="position-relative form-group">
-                                <label class="">Số Điện Thoại</label>
-                                <input name="soDienThoai" class="form-control">
-                            </div>
-                            <div class="position-relative form-group">
-                                <label class="">Email</label>
-                                <input name="email" class="form-control">
-                            </div>
-                            <div class="position-relative form-group">
-                                <label class="">Tên Người Đại Diện</label>
-                                <input name="tenNguoiDaiDien" class="form-control">
+                                <label class="">Tên Loại Sản Phẩm</label>
+                                <input name="tenLoaiSanPham" class="form-control">
                             </div>
                             <div class="d-block text-right card-footer">
                                 <button class="mt-1 btn btn-primary">Submit</button>
@@ -49,18 +33,39 @@
                     </div>
                 </div>
             </div>
-            <div class="col-md-9">
+            <div class="col-md-3">
                 <div class="main-card mb-3 card">
-                    <div class="card-body"><h5 class="card-title">Danh sách nhà cung cấp</h5>
+                    <div class="card-body">
+                        <h5 class="card-title">Chỉnh Sửa Loại Sản Phẩm</h5>
+                        <form method="post" action="{{ Route('updateLoaiSanPham') }}">
+                            @csrf
+                            <div class="position-relative form-group">
+                                <label class="">Tên Loại Sản Phẩm</label>
+                                <input name="tenLoaiSanPham" class="form-control" value="{{ empty($loaiSanPham->tenLoaiSanPham) ? '' : $loaiSanPham->tenLoaiSanPham }}">
+                            </div>
+                            <div class="position-relative form-group">
+                                <label for="exampleSelect" class="">Tình trạng</label>
+                                <select name="tinhTrang" id="exampleSelect" class="form-control">
+                                    <option value="1">Còn hoạt động</option>
+                                    <option value="0">Tạm dừng</option>
+                                </select>
+                            </div>
+                            <div class="d-block text-right card-footer">
+                                <button class="mt-1 btn btn-primary">Submit</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="main-card mb-3 card">
+                    <div class="card-body"><h5 class="card-title">Danh sách Loại Sản Phẩm</h5>
                         <table id="example" class="mb-0 table table-bordered">
                             <thead>
                             <tr>
                                 <th class="text-center">#</th>
-                                <th class="text-center">Tên Nhà Cung Cấp</th>
-                                <th class="text-center">Địa Chỉ</th>
-                                <th class="text-center">Số Điện Thoại</th>
-                                <th class="text-center">Tên Người Đại Diện</th>
-                                <th class="text-center">Email</th>
+                                <th class="text-center">Tên Loại Sản Phẩm</th>
+                                <th class="text-center">Link Loại Sản Phẩm</th>
                                 <th class="text-center">Tình Trạng</th>
                                 <th class="text-center">Action</th>
                             </tr>
@@ -69,13 +74,14 @@
                                 @foreach ($data as $key => $value)
                                 <tr>
                                     <th class="text-center"> {{ $key + 1 }}</th>
-                                    <td>{{ $value->tenNhaCungCap }}</td>
-                                    <td>{{ $value->diaChi }}</td>
-                                    <td>{{ $value->soDienThoai }}</td>
-                                    <td>{{ $value->tenNguoiDaiDien }}</td>
-                                    <td>{{ $value->email }}</td>
+                                    <td>{{ $value->tenLoaiSanPham }}</td>
+                                    <td>{{ $value->slugLoaiSanPham }}</td>
                                     <td>{{ $value->tinhTrang == 0 ? 'Tạm dừng' : 'Còn hoạt động'}}</td>
-                                    <td> Action </td>
+                                    <td class="text-center">
+                                        <a href="/admin/loaisanpham/{{ $value->id }}">
+                                            <i class="pe-7s-pen"></i>
+                                        </a>
+                                    </td>
                                 </tr>
                                 @endforeach
                             </tbody>
