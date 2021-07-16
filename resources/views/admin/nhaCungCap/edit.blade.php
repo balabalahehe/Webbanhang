@@ -20,27 +20,27 @@
                 <div class="main-card mb-3 card">
                     <div class="card-body">
                         <h5 class="card-title">Thông Tin Nhà Cung Cấp</h5>
-                        <form method="post" action="{{ Route('themNhaCungCap') }}">
+                        <form method="post">
                             @csrf
                             <div class="position-relative form-group">
                                 <label class="">Tên Nhà Cung Cấp</label>
-                                <input name="tenNhaCungCap" class="form-control">
+                                <input value="{{$nhaCungCap->tenNhaCungCap}}" class="form-control">
                             </div>
                             <div class="position-relative form-group">
                                 <label class="">Địa Chỉ</label>
-                                <input name="diaChi" class="form-control">
+                                <input value="{{$nhaCungCap->diaChi}}" class="form-control">
                             </div>
                             <div class="position-relative form-group">
                                 <label class="">Số Điện Thoại</label>
-                                <input name="soDienThoai" class="form-control">
+                                <input value="{{$nhaCungCap->soDienThoai}}" class="form-control">
                             </div>
                             <div class="position-relative form-group">
                                 <label class="">Email</label>
-                                <input name="email" class="form-control">
+                                <input value="{{$nhaCungCap->email}}" class="form-control">
                             </div>
                             <div class="position-relative form-group">
                                 <label class="">Tên Người Đại Diện</label>
-                                <input name="tenNguoiDaiDien" class="form-control">
+                                <input value="{{$nhaCungCap->tenNguoiDaiDien}}" class="form-control">
                             </div>
                             <div class="d-block text-right card-footer">
                                 <button class="mt-1 btn btn-primary">Submit</button>
@@ -76,8 +76,8 @@
                                     <td>{{ $value->email }}</td>
                                     <td class="text-nowrap">{{ $value->tinhTrang == 0 ? 'Tạm dừng' : 'Còn hoạt động'}}</td>
                                     <td class="text-nowrap">
-                                        {{-- <a href="/admin/nhacungcap/{{ $value->id }}" class="btn btn-danger">Edit Old</a> --}}
-                                        <button type="button" class="editModal btn btn-primary" data-id={{ $value->id }} data-toggle="modal" data-target="#laptrinhABC">
+                                        <a href="/admin/nhacungcap/{{ $value->id }}" class="btn btn-danger">Edit Old</a>
+                                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#laptrinhABC">
                                             Edit
                                         </button>
                                     </td>
@@ -105,30 +105,11 @@
                 </button>
             </div>
             <div class="modal-body">
-                <div class="position-relative form-group">
-                    <label class="">Tên Nhà Cung Cấp</label>
-                    <input id="tenNhaCungCap" name="tenNhaCungCap" class="form-control">
-                </div>
-                <div class="position-relative form-group">
-                    <label class="">Địa Chỉ</label>
-                    <input id="diaChi" name="diaChi" class="form-control">
-                </div>
-                <div class="position-relative form-group">
-                    <label class="">Số Điện Thoại</label>
-                    <input id="soDienThoai" name="soDienThoai" class="form-control">
-                </div>
-                <div class="position-relative form-group">
-                    <label class="">Email</label>
-                    <input id="email" name="email" class="form-control">
-                </div>
-                <div class="position-relative form-group">
-                    <label class="">Tên Người Đại Diện</label>
-                    <input id="tenNguoiDaiDien" name="tenNguoiDaiDien" class="form-control">
-                </div>
+
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                <button type="submit" class="btn btn-primary" data-dismiss="modal">Save changes</button>
+                <button type="button" class="btn btn-primary">Save changes</button>
             </div>
         </div>
     </div>
@@ -140,30 +121,5 @@
             toastr.error("{{ $error }}");
         @endforeach
     @endif
-</script>
-<script>
-    $.ajaxSetup({
-    headers: {
-        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-        }
-    });
-    $(document).ready(function(){
-        $(".editModal").click(function(){
-            console.log('Tao click được rồi');
-            let id = $(this).data('id');
-            console.log(id);
-            $.ajax({
-                url: '/admin/nhacungcap/' + id,
-                type: 'get',
-                success: function($nhaCungCap){
-                    $("#tenNhaCungCap").val($nhaCungCap.tenNhaCungCap);
-                    $("#diaChi").val($nhaCungCap.diaChi);
-                    $("#soDienThoai").val($nhaCungCap.soDienThoai);
-                    $("#email").val($nhaCungCap.email);
-                    $("#tenNguoiDaiDien").val($nhaCungCap.tenNguoiDaiDien);
-                },
-            });
-        });
-    });
 </script>
 @endsection

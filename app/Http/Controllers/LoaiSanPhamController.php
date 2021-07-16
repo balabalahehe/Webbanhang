@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\chinhSuaLoaiSanPhamRequest;
 use App\Http\Requests\themMoiLoaiSanPhamRequest;
 use App\Models\LoaiSanPham;
 use Illuminate\Http\Request;
@@ -85,9 +86,18 @@ class LoaiSanPhamController extends Controller
      * @param  \App\LoaiSanPham  $loaiSanPham
      * @return \Illuminate\Http\Response
      */
-    public function update(themMoiLoaiSanPhamRequest $request)
+    public function update(chinhSuaLoaiSanPhamRequest $request)
     {
         dd($request->toArray());
+    }
+
+    public function loaiSanPhamThayDoiTinhTrang($id)
+    {
+        $loaiSanPham = LoaiSanPham::find($id);
+        $loaiSanPham->tinhTrang = ($loaiSanPham->tinhTrang + 1) % 2;
+        $loaiSanPham->save();
+        // dd($loaiSanPham);
+        return response()->json($loaiSanPham);
     }
 
     /**

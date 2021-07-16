@@ -28,7 +28,7 @@ class themMoiNhaCungCapRequest extends FormRequest
             'diaChi'             =>'required|min:7|max:50',
             'soDienThoai'        =>'required|min:9|max:12',
             'email'              =>'required|min:7|max:50',
-            'tinhTrang'          =>'required|boolean',
+            // 'tinhTrang'          =>'required|boolean',
             'tenNguoiDaiDien'    =>'min:3|max:50|',
         ];
     }

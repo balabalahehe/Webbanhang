@@ -7,7 +7,7 @@
                 </i>
             </div>
             <div>
-                Quản Lý Nhà Cung Cấp
+                Quản Lý Loại Sản Phẩm
             </div>
         </div>
     </div>
@@ -39,6 +39,10 @@
                         <h5 class="card-title">Chỉnh Sửa Loại Sản Phẩm</h5>
                         <form method="post" action="{{ Route('updateLoaiSanPham') }}">
                             @csrf
+                            <div class="position-relative form-group">
+                                <label class="">ID</label>
+                                <input name="id" class="form-control" value="{{ empty($loaiSanPham->id) ? '' : $loaiSanPham->id }}">
+                            </div>
                             <div class="position-relative form-group">
                                 <label class="">Tên Loại Sản Phẩm</label>
                                 <input name="tenLoaiSanPham" class="form-control" value="{{ empty($loaiSanPham->tenLoaiSanPham) ? '' : $loaiSanPham->tenLoaiSanPham }}">
@@ -76,7 +80,7 @@
                                     <th class="text-center"> {{ $key + 1 }}</th>
                                     <td>{{ $value->tenLoaiSanPham }}</td>
                                     <td>{{ $value->slugLoaiSanPham }}</td>
-                                    <td>{{ $value->tinhTrang == 0 ? 'Tạm dừng' : 'Còn hoạt động'}}</td>
+                                    <td class="tinhTrang" data-id={{$value->id}}>{{ $value->tinhTrang == 0 ? 'Tạm dừng' : 'Còn hoạt động'}}</td>
                                     <td class="text-center">
                                         <a href="/admin/loaisanpham/{{ $value->id }}">
                                             <i class="pe-7s-pen"></i>
@@ -102,5 +106,30 @@
             toastr.error("{{ $error }}");
         @endforeach
     @endif
+</script>
+<script>
+    $.ajaxSetup({
+    headers: {
+        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+    });
+    $(document).ready(function(){
+        $(".tinhTrang").click(function(){
+            let id = $(this).data('id');
+            let self = this;
+            console.log('Tao click được rồi' + id);
+            $.ajax({
+                url  : '/admin/loaiSanPhamThayDoiTinhTrang/' + id,
+                type : 'get',
+                success:function($loaiSanPham){
+                    if($loaiSanPham['tinhTrang'] == 0){
+                        self.innerText  = 'Tạm dừng';
+                    } else {
+                        self.innerText  = 'Còn hoạt động';
+                    }
+                }
+            });
+        });
+    });
 </script>
 @endsection

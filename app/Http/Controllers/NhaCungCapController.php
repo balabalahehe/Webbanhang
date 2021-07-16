@@ -71,9 +71,15 @@ class NhaCungCapController extends Controller
      * @param  \App\NhaCungCap  $nhaCungCap
      * @return \Illuminate\Http\Response
      */
-    public function edit(NhaCungCap $nhaCungCap)
+    public function edit($id)
     {
-        //
+        $nhaCungCap = NhaCungCap::find($id);
+        return response()->json($nhaCungCap);
+        // $data = NhaCungCap::paginate(5);
+        // $data = NhaCungCap::where('id', $id)->first();
+        // $data = NhaCungCap::where('id', $id)->get();
+        // $data = NhaCungCap::where('id', $id)->paginate();
+        // return view('admin.nhaCungCap.edit', compact('data','nhaCungCap'));
     }
 
     /**
