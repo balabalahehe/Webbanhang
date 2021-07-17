@@ -27,4 +27,8 @@ Route::prefix('/admin')->group(function () {
     Route::get('/loaisanpham/{id}', 'LoaiSanPhamController@edit')->name('editLoaiSanPham');
     Route::post('/loaisanphamupdate', 'LoaiSanPhamController@update')->name('updateLoaiSanPham');
 
+    Route::get('/loaisanpham/delete/{id}', 'LoaiSanPhamController@destroy')->name('deleteLoaiSanPham');
+    Route::get('/loaisanpham/find/{slugName}', 'LoaiSanPhamController@findSlugName')->name('findSlugName');
+
+
 });

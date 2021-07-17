@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\chinhSuaLoaiSanPhamRequest;
 use App\Http\Requests\themMoiLoaiSanPhamRequest;
+use App\Models\LichSuThaoTac;
 use App\Models\LoaiSanPham;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
@@ -39,10 +40,18 @@ class LoaiSanPhamController extends Controller
      */
     public function store(themMoiLoaiSanPhamRequest $request)
     {
-        LoaiSanPham::create([
+        $loaiSanPham = LoaiSanPham::create([
             'tenLoaiSanPham'    => $request->tenLoaiSanPham,
             'slugLoaiSanPham'   => Str::slug($request->tenLoaiSanPham),
             'tinhTrang'         => 1,
+        ]);
+
+
+        LichSuThaoTac::create([
+            'page'      =>  '/admin/loaisanpham',
+            'action'    =>  'Thêm Mới',
+            'content'   =>  'Thêm mới loại sản phẩm có id: ' . $loaiSanPham->id . ' có tên là: ' . $loaiSanPham->tenLoaiSanPham,
+            'user_id'   =>  1,
         ]);
 
         toastr()->success('Thêm mới loại sản phẩm thành công');
@@ -88,7 +97,23 @@ class LoaiSanPhamController extends Controller
      */
     public function update(chinhSuaLoaiSanPhamRequest $request)
     {
-        dd($request->toArray());
+        $loaiSanPham = LoaiSanPham::where('slugLoaiSanPham', Str::slug($request->tenLoaiSanPham))
+                                    ->where('id', '<>', $request->id)
+                                    ->get();
+
+        if(count($loaiSanPham) > 0){
+            toastr()->error('Tên loại sản phẩm đã tồn tại!');
+            return redirect()->back();
+        }
+
+        $loaiSanPham = LoaiSanPham::find($request->id);
+        $loaiSanPham->tenLoaiSanPham = $request->tenLoaiSanPham;
+        $loaiSanPham->slugLoaiSanPham = Str::slug($request->tenLoaiSanPham);
+        $loaiSanPham->tinhTrang = $request->tinhTrang;
+        $loaiSanPham->save();
+
+        toastr()->success('Đã cập nhật loại sản phẩm thành công!');
+        return redirect()->route('indexLoaiSanPham');
     }
 
     public function loaiSanPhamThayDoiTinhTrang($id)
@@ -106,8 +131,24 @@ class LoaiSanPhamController extends Controller
      * @param  \App\LoaiSanPham  $loaiSanPham
      * @return \Illuminate\Http\Response
      */
-    public function destroy(LoaiSanPham $loaiSanPham)
+    public function destroy($id)
     {
-        //
+        $loaiSanPham = LoaiSanPham::find($id);
+
+        if(!empty($loaiSanPham)){
+            $loaiSanPham->delete();
+            return response()->json($loaiSanPham);
+        }
+    }
+
+    public function findSlugName($slugName)
+    {
+        $loaiSanPham = LoaiSanPham::where('slugLoaiSanPham', $slugName)->first();
+        if(empty($loaiSanPham)){
+            $status = true;
+        } else {
+            $status = false;
+        }
+        return response()->json(['status' => $status]);
     }
 }

@@ -25,7 +25,8 @@ class chinhSuaLoaiSanPhamRequest extends FormRequest
     {
         return [
             'id'                    => 'required',
-            'tenLoaiSanPham'        => 'required|max:50|unique:loai_san_phams,tenLoaiSanPham'.($this->id ?? ''),
+            // 'tenLoaiSanPham'        => 'required|max:50|unique:loai_san_phams,tenLoaiSanPham,' . $this->id,
+            'tenLoaiSanPham'        => 'required|max:50',
             'tinhTrang'             => 'required|boolean',
         ];
     }

@@ -24,10 +24,10 @@
                             @csrf
                             <div class="position-relative form-group">
                                 <label class="">Tên Loại Sản Phẩm</label>
-                                <input name="tenLoaiSanPham" class="form-control">
+                                <input id="tenLoaiSanPhamThemMoi" name="tenLoaiSanPham" class="form-control">
                             </div>
                             <div class="d-block text-right card-footer">
-                                <button class="mt-1 btn btn-primary">Submit</button>
+                                <button class="mt-1 btn btn-primary">Thêm Mới</button>
                             </div>
                         </form>
                     </div>
@@ -39,10 +39,8 @@
                         <h5 class="card-title">Chỉnh Sửa Loại Sản Phẩm</h5>
                         <form method="post" action="{{ Route('updateLoaiSanPham') }}">
                             @csrf
-                            <div class="position-relative form-group">
-                                <label class="">ID</label>
-                                <input name="id" class="form-control" value="{{ empty($loaiSanPham->id) ? '' : $loaiSanPham->id }}">
-                            </div>
+                            <input name="id" class="form-control" value="{{ empty($loaiSanPham->id) ? '' : $loaiSanPham->id }}" hidden>
+
                             <div class="position-relative form-group">
                                 <label class="">Tên Loại Sản Phẩm</label>
                                 <input name="tenLoaiSanPham" class="form-control" value="{{ empty($loaiSanPham->tenLoaiSanPham) ? '' : $loaiSanPham->tenLoaiSanPham }}">
@@ -55,7 +53,7 @@
                                 </select>
                             </div>
                             <div class="d-block text-right card-footer">
-                                <button class="mt-1 btn btn-primary">Submit</button>
+                                <button class="mt-1 btn btn-primary">Chỉnh sửa</button>
                             </div>
                         </form>
                     </div>
@@ -82,8 +80,11 @@
                                     <td>{{ $value->slugLoaiSanPham }}</td>
                                     <td class="tinhTrang" data-id={{$value->id}}>{{ $value->tinhTrang == 0 ? 'Tạm dừng' : 'Còn hoạt động'}}</td>
                                     <td class="text-center">
-                                        <a href="/admin/loaisanpham/{{ $value->id }}">
-                                            <i class="pe-7s-pen"></i>
+                                        <a class="btn btn-primary" href="/admin/loaisanpham/{{ $value->id }}">
+                                            Edit
+                                        </a>
+                                        <a data-id={{ $value->id }} class="xoaLoaiSanPham btn btn-warning" type="button" data-toggle="modal" data-target="#exampleModal">
+                                            Delete
                                         </a>
                                     </td>
                                 </tr>
@@ -99,6 +100,27 @@
     </div>
 </div>
 @endsection
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Xóa Loại Sản Phẩm</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <input id="idCanXoa" hidden>
+                <p class="mb-0">Bạn có muốn xóa loại sản phẩm này không???</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button id="taoChacChan" type="button" class="btn btn-primary" data-dismiss="modal">Tao Chắc Chắn</button>
+            </div>
+        </div>
+    </div>
+</div>
 @section('js')
 <script>
     @if(count($errors) > 0)
@@ -129,6 +151,34 @@
                     }
                 }
             });
+        });
+        let row;
+        $(".xoaLoaiSanPham").click(function(){
+            let id = $(this).data('id');
+            row = $(this).parents('tr');
+            $("#idCanXoa").val(id);
+            console.log('Đã bấm nút xóa loại sản phẩm có id ' + id);
+        })
+
+        $("#taoChacChan").click(function(){
+            let idCanXoa = $("#idCanXoa").val();
+            console.log('Đã bấm nút tao chắc chắn rồi đó hỉ' + idCanXoa);
+            $.ajax({
+                url: '/admin/loaisanpham/delete/' + idCanXoa,
+                type: 'get',
+                success:function(){
+                    // row.remove();
+                    toastr.success('Đã xóa sản phẩm thành công');
+                },
+                error:function(){
+                    toastr.error('Có lỗi rồi chú ơi');
+                }
+            });
+        });
+
+        $("#tenLoaiSanPhamThemMoi").blur(function(){
+            let value = $("#tenLoaiSanPhamThemMoi").val();
+            console.log('value vừa điề là: ' + string_to_slug(value));
         });
     });
 </script>
