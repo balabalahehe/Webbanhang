@@ -18,7 +18,7 @@ Route::prefix('/admin')->group(function () {
     Route::get('/nhacungcap', 'NhaCungCapController@index')->name('indexNhaCungCap');
     Route::post('/nhacungcap', 'NhaCungCapController@store')->name('themNhaCungCap');
     Route::get('/nhacungcap/{id}', 'NhaCungCapController@edit')->name('editNhaCungCap');
-
+    Route::post('/nhacungcap/update', 'NhaCungCapController@update')->name('updateNhaCungCap');
 
     Route::get('/loaisanpham', 'LoaiSanPhamController@index')->name('indexLoaiSanPham');
     Route::get('/loaiSanPhamThayDoiTinhTrang/{id}', 'LoaiSanPhamController@loaiSanPhamThayDoiTinhTrang');

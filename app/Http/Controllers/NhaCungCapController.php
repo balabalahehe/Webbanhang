@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\chinhSuaNhaCungCapRequest;
 use App\Http\Requests\themMoiNhaCungCapRequest;
 use App\Models\NhaCungCap;
 use Illuminate\Http\Request;
@@ -89,9 +90,16 @@ class NhaCungCapController extends Controller
      * @param  \App\NhaCungCap  $nhaCungCap
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, NhaCungCap $nhaCungCap)
+    public function update(chinhSuaNhaCungCapRequest $request)
     {
-        //
+        $nhaCungCap = NhaCungCap::find($request->idNhaCungCap);
+        if(!empty($nhaCungCap)){
+            $nhaCungCap->update($request->all());
+        }
+
+        $status = empty($nhaCungCap) ? false : true;
+
+        return response()->json(['status' => $status, 'nhaCungCap' => $nhaCungCap]);
     }
 
     /**

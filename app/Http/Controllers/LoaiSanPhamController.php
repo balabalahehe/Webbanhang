@@ -149,6 +149,8 @@ class LoaiSanPhamController extends Controller
         } else {
             $status = false;
         }
+
         return response()->json(['status' => $status]);
     }
+
 }

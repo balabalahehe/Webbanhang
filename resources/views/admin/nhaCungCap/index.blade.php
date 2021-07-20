@@ -105,6 +105,7 @@
                 </button>
             </div>
             <div class="modal-body">
+                <input type="text" name="idNhaCungCap" id="idNhaCungCap" hidden>
                 <div class="position-relative form-group">
                     <label class="">Tên Nhà Cung Cấp</label>
                     <input id="tenNhaCungCap" name="tenNhaCungCap" class="form-control">
@@ -125,10 +126,17 @@
                     <label class="">Tên Người Đại Diện</label>
                     <input id="tenNguoiDaiDien" name="tenNguoiDaiDien" class="form-control">
                 </div>
+                <div class="position-relative form-group">
+                    <label class="">Tình Trạng</label>
+                    <select name="tinhTrang" id="tinhTrang" class="form-control">
+                        <option value="1">Còn hoạt động</option>
+                        <option value="0">Tạm dừng</option>
+                    </select>
+                </div>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                <button type="submit" class="btn btn-primary" data-dismiss="modal">Save changes</button>
+                <button id="updateNhaCungCap" type="button" class="btn btn-primary" data-dismiss="modal">Save changes</button>
             </div>
         </div>
     </div>
@@ -149,18 +157,57 @@
     });
     $(document).ready(function(){
         $(".editModal").click(function(){
-            console.log('Tao click được rồi');
             let id = $(this).data('id');
-            console.log(id);
+            row = $(this).parents('tr');
+
+            console.log(row);
+
+            var a=2;//row index
+            var b=3;//column index
+            var c=$("#example").find('tr:eq('+ a + ')').find('td:eq(' + b + ')');
+            alert(c.text());
+
             $.ajax({
                 url: '/admin/nhacungcap/' + id,
                 type: 'get',
                 success: function($nhaCungCap){
+                    $("#idNhaCungCap").val($nhaCungCap.id);
                     $("#tenNhaCungCap").val($nhaCungCap.tenNhaCungCap);
                     $("#diaChi").val($nhaCungCap.diaChi);
                     $("#soDienThoai").val($nhaCungCap.soDienThoai);
                     $("#email").val($nhaCungCap.email);
                     $("#tenNguoiDaiDien").val($nhaCungCap.tenNguoiDaiDien);
+                    $("#tinhTrang").val($nhaCungCap.tinhTrang).change();
+                },
+            });
+        });
+
+        $("#updateNhaCungCap").click(function(){
+            let tenNhaCungCapUp   = $("#tenNhaCungCap").val();
+            let diaChiUp          = $("#diaChi").val();
+            let soDienThoaiUp     = $("#soDienThoai").val();
+            let emailUp           = $("#email").val();
+            let tenNguoiDaiDienUp = $("#tenNguoiDaiDien").val();
+            let idNhaCungCapUp    = $("#idNhaCungCap").val();
+            let tinhTrangUp       = $("#tinhTrang").val();
+
+            console.log(idNhaCungCap);
+
+            $.ajax({
+                url: '/admin/nhacungcap/update',
+                type: 'post',
+                data: {
+                    tenNhaCungCap       :   tenNhaCungCapUp,
+                    diaChi              :   diaChiUp,
+                    soDienThoai         :   soDienThoaiUp,
+                    email               :   emailUp,
+                    tenNguoiDaiDien     :   tenNguoiDaiDienUp,
+                    idNhaCungCap        :   idNhaCungCapUp,
+                    tinhTrang           :   tinhTrangUp,
+                },
+                success: function($nhaCungCap){
+                    console.log($nhaCungCap.nhaCungCap.tenNguoiDaiDien);
+                    // toastr.success("Đã cập nhật nhà cung cấp thành công!");
                 },
             });
         });
