@@ -156,28 +156,26 @@
         }
     });
     $(document).ready(function(){
+        var currentRow;
         $(".editModal").click(function(){
             let id = $(this).data('id');
-            row = $(this).parents('tr');
-
-            console.log(row);
-
-            var a=2;//row index
-            var b=3;//column index
-            var c=$("#example").find('tr:eq('+ a + ')').find('td:eq(' + b + ')');
-            alert(c.text());
+            currentRow = $(this).closest("tr");
 
             $.ajax({
                 url: '/admin/nhacungcap/' + id,
                 type: 'get',
                 success: function($nhaCungCap){
-                    $("#idNhaCungCap").val($nhaCungCap.id);
-                    $("#tenNhaCungCap").val($nhaCungCap.tenNhaCungCap);
-                    $("#diaChi").val($nhaCungCap.diaChi);
-                    $("#soDienThoai").val($nhaCungCap.soDienThoai);
-                    $("#email").val($nhaCungCap.email);
-                    $("#tenNguoiDaiDien").val($nhaCungCap.tenNguoiDaiDien);
-                    $("#tinhTrang").val($nhaCungCap.tinhTrang).change();
+                    if(jQuery.isEmptyObject($nhaCungCap) == false){
+                        $("#idNhaCungCap").val($nhaCungCap.id);
+                        $("#tenNhaCungCap").val($nhaCungCap.tenNhaCungCap);
+                        $("#diaChi").val($nhaCungCap.diaChi);
+                        $("#soDienThoai").val($nhaCungCap.soDienThoai);
+                        $("#email").val($nhaCungCap.email);
+                        $("#tenNguoiDaiDien").val($nhaCungCap.tenNguoiDaiDien);
+                        $("#tinhTrang").val($nhaCungCap.tinhTrang).change();
+                    } else {
+                        toastr.error('Hết việc làm hả???');
+                    }
                 },
             });
         });
@@ -191,10 +189,15 @@
             let idNhaCungCapUp    = $("#idNhaCungCap").val();
             let tinhTrangUp       = $("#tinhTrang").val();
 
-            console.log(idNhaCungCap);
+            // var col1 = currentRow.find("td:eq(0)").text();
+            // var col2 = currentRow.find("td:eq(1)").text();
+            // var col3 = currentRow.find("td:eq(2)").text();
+
+            // alert(col1 + ' ' + col2 + ' ' + col3);
+            // console.log(idNhaCungCap);
 
             $.ajax({
-                url: '/admin/nhacungcap/update',
+                url: " {{ Route('updateNhaCungCap') }}",
                 type: 'post',
                 data: {
                     tenNhaCungCap       :   tenNhaCungCapUp,
@@ -207,7 +210,19 @@
                 },
                 success: function($nhaCungCap){
                     console.log($nhaCungCap.nhaCungCap.tenNguoiDaiDien);
+                    currentRow.find("td:eq(0)").text($nhaCungCap.nhaCungCap.tenNhaCungCap);
+                    currentRow.find("td:eq(1)").text($nhaCungCap.nhaCungCap.diaChi);
+                    currentRow.find("td:eq(2)").text($nhaCungCap.nhaCungCap.email);
+                    currentRow.find("td:eq(3)").text($nhaCungCap.nhaCungCap.tenNguoiDaiDien);
+                    currentRow.find("td:eq(4)").text($nhaCungCap.nhaCungCap.tinhTrang == 0 ? 'Tạm dừng' : 'Còn hoạt động');
                     // toastr.success("Đã cập nhật nhà cung cấp thành công!");
+                },
+                error: function($errors){
+                    var err = jQuery.parseJSON($errors.responseText);
+                    console.log(err);
+                    $.each(err.errors, function(index, value ) {
+                        toastr.error(value);
+                    });
                 },
             });
         });

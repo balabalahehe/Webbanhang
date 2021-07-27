@@ -8,6 +8,7 @@ use App\Models\LichSuThaoTac;
 use App\Models\LoaiSanPham;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\DB;
 class LoaiSanPhamController extends Controller
 {
     /**
@@ -38,13 +39,16 @@ class LoaiSanPhamController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(themMoiLoaiSanPhamRequest $request)
+    public function store(Request $request)
     {
+
+
         $loaiSanPham = LoaiSanPham::create([
             'tenLoaiSanPham'    => $request->tenLoaiSanPham,
             'slugLoaiSanPham'   => Str::slug($request->tenLoaiSanPham),
             'tinhTrang'         => 1,
         ]);
+
 
 
         LichSuThaoTac::create([
@@ -78,7 +82,8 @@ class LoaiSanPhamController extends Controller
      */
     public function edit($id)
     {
-        $loaiSanPham = LoaiSanPham::find($id);
+        $loaiSanPham = LoaiSanPham::where('id', $id)->get();
+
         if(!empty($loaiSanPham)){
             $data = LoaiSanPham::paginate(10);
             return view('admin.loaisanpham.index', compact('data', 'loaiSanPham'));
@@ -143,7 +148,11 @@ class LoaiSanPhamController extends Controller
 
     public function findSlugName($slugName)
     {
+        DB::enableQueryLog();
+
         $loaiSanPham = LoaiSanPham::where('slugLoaiSanPham', $slugName)->first();
+
+        dd(DB::getQueryLog());
         if(empty($loaiSanPham)){
             $status = true;
         } else {

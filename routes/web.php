@@ -13,6 +13,10 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+Route::get('/register', 'DangKyTaiKhoanFakeController@index');
+Route::post('/register', 'DangKyTaiKhoanFakeController@store')->name('register');
+Route::get('/login', 'DangKyTaiKhoanFakeController@viewLogin');
+Route::post('/login', 'DangKyTaiKhoanFakeController@login')->name('login');
 
 Route::prefix('/admin')->group(function () {
     Route::get('/nhacungcap', 'NhaCungCapController@index')->name('indexNhaCungCap');
