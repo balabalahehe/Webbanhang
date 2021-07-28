@@ -39,17 +39,13 @@ class LoaiSanPhamController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(themMoiLoaiSanPhamRequest $request)
     {
-
-
         $loaiSanPham = LoaiSanPham::create([
             'tenLoaiSanPham'    => $request->tenLoaiSanPham,
             'slugLoaiSanPham'   => Str::slug($request->tenLoaiSanPham),
             'tinhTrang'         => 1,
         ]);
-
-
 
         LichSuThaoTac::create([
             'page'      =>  '/admin/loaisanpham',

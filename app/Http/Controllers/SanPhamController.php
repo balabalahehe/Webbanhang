@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\SanPham;
+use App\Http\Requests\themMoiSanPhamRequest;
+use App\Models\LoaiSanPham;
+use App\Models\SanPham;
 use Illuminate\Http\Request;
-
+use Carbon\Carbon;
 class SanPhamController extends Controller
 {
     /**
@@ -24,7 +26,9 @@ class SanPhamController extends Controller
      */
     public function create()
     {
-        //
+        $loaiSanPham = LoaiSanPham::where('tinhTrang', \App\Models\LoaiSanPham::tinhTrang_Open)->get();
+
+        return view('admin.sanpham.create', compact('loaiSanPham'));
     }
 
     /**
@@ -33,9 +37,21 @@ class SanPhamController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(themMoiSanPhamRequest $request)
     {
-        //
+        if($request->hasFile('hinhAnh')){
+            $current_timestamp = Carbon::now()->setTimezone('Asia/Ho_Chi_Minh')->timestamp;
+            $image = $request->file('hinhAnh');
+            $filename = $request->slugTenSanPham . '-' .$current_timestamp . '.jpg';
+            $storedPath = $image->move('images/sanPham', $filename);
+        }
+        $data = $request->all();
+        $data['hinhAnh'] = $filename;
+
+        SanPham::create($data);
+        toastr()->success('Thêm mới sản phẩm thành công');
+
+        return redirect()->route('viewThemSanPham');
     }
 
     /**

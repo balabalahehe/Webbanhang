@@ -34,5 +34,7 @@ Route::prefix('/admin')->group(function () {
     Route::get('/loaisanpham/delete/{id}', 'LoaiSanPhamController@destroy')->name('deleteLoaiSanPham');
     Route::get('/loaisanpham/find/{slugName}', 'LoaiSanPhamController@findSlugName')->name('findSlugName');
 
+    Route::get('/sanpham/create', 'SanPhamController@create')->name('viewThemSanPham');
+    Route::post('/sanpham/create', 'SanPhamController@store')->name('themSanPham');
 
 });

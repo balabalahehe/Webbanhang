@@ -13,4 +13,7 @@ class LoaiSanPham extends Model
         'slugLoaiSanPham',
         'tinhTrang',
     ];
+
+    const tinhTrang_Open  = 1;
+    const tinhTrang_Close = 0;
 }
