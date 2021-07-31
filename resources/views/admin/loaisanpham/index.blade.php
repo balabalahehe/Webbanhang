@@ -147,8 +147,10 @@
                 success:function($loaiSanPham){
                     if($loaiSanPham['tinhTrang'] == 0){
                         self.innerText  = 'Tạm dừng';
+                        toastr.error('Đã thay đổi trạng thái!');
                     } else {
                         self.innerText  = 'Còn hoạt động';
+                        toastr.success('Đã thay đổi trạng thái!');
                     }
                 }
             });

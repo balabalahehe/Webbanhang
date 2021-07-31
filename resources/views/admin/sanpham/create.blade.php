@@ -37,16 +37,40 @@
                                 </div>
                             </div>
                             <div class="position-relative form-group">
-                                <label class="">Hình Ảnh (Avatar)</label><br>
-                                <input type="file" name="hinhAnh">
+                                <div class="input-group">
+                                    <a id="lfm" data-input="thumbnail" data-preview="holder" class="mt-1 btn btn-light">
+                                        Choose
+                                    </a>
+                                    <input id="thumbnail" name="hinhAnh" class="form-control" type="text" name="filepath">
+                                </div>
+                                <img id="holder" style="margin-top:15px;max-height:100px;">
                             </div>
+                            <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+                            <script src="/vendor/laravel-filemanager/js/lfm.js"></script>
+                            <script>
+                                 $('#lfm').filemanager('image');
+                            </script>
                             <div class="position-relative form-group">
                                 <label class="">Mô Tả Ngắn</label>
-                                <input name="moTaNgan" class="form-control">
+                                <textarea name="moTaNgan" class="form-control" row=5></textarea>
                             </div>
                             <div class="position-relative form-group">
                                 <label class="">Nội Dung</label>
-                                <input name="moTaDai" class="form-control">
+                                <textarea id="my-editor-2" name="moTaDai" class="form-control">
+
+                                </textarea>
+                                <script src="//cdn.ckeditor.com/4.6.2/standard/ckeditor.js"></script>
+                                <script>
+                                    var options = {
+                                        filebrowserImageBrowseUrl: '/laravel-filemanager?type=Images',
+                                        filebrowserImageUploadUrl: '/laravel-filemanager/upload?type=Images&_token=',
+                                        filebrowserBrowseUrl: '/laravel-filemanager?type=Files',
+                                        filebrowserUploadUrl: '/laravel-filemanager/upload?type=Files&_token='
+                                    };
+                                </script>
+                                <script>
+                                    CKEDITOR.replace('my-editor-2', options);
+                                </script>
                             </div>
                             <div class="row">
                                 <div class="col-md-4">
@@ -62,13 +86,21 @@
                                 <div class="col-md-4">
                                     <div class="position-relative form-group">
                                         <label class="">Trọng Lượng</label>
-                                        <input name="trongLuong" class="form-control">
+                                        <div class="input-group">
+                                            <input name="trongLuong" class="form-control">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text" id="inputGroupPrepend">gram</span>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                                 <div class="col-md-4">
                                     <div class="position-relative form-group">
                                         <label class="">Tình Trạng</label>
-                                        <input name="tinhTrang" class="form-control">
+                                        <select name="tinhTrang" class="form-control">
+                                            <option value=1>Còn kinh doanh</option>
+                                            <option value=0>Tạm dừng kinh doanh</option>
+                                        </select>
                                     </div>
                                 </div>
                             </div>
@@ -76,18 +108,29 @@
                                 <div class="col-md-6">
                                     <div class="position-relative form-group">
                                         <label class="">Giá Khuyến Mãi</label>
-                                        <input name="giaKhuyenMai" class="form-control">
+                                        <div class="input-group">
+                                            <input id="giaKhuyenMai" name="giaKhuyenMai" class="form-control">
+                                            {{-- <input id="giaKhuyenMaiA" name="giaKhuyenMai" class="form-control" hidden> --}}
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text" id="inputGroupPrepend">đ</span>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="position-relative form-group">
                                         <label class="">Giá Bán</label>
-                                        <input name="giaBan" class="form-control">
+                                        <div class="input-group">
+                                            <input id="giaBan" name="giaBan" class="form-control">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text" id="inputGroupPrepend">đ</span>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                             <div class="d-block text-right card-footer">
-                                <button class="mt-1 btn btn-primary">Submit</button>
+                                <button id="submit" class="mt-1 btn btn-primary">Submit</button>
                             </div>
                         </form>
                     </div>
@@ -144,6 +187,26 @@
             var tenSanPham = $("#tenSanPham").val();
             $('#slugTenSanPham').val(ChangeToSlug(tenSanPham));
         });
+        $("#giaKhuyenMai").keyup(function(){
+            var giaKM = $("#giaKhuyenMai").val();
+            $("#giaKhuyenMai").val(new Intl.NumberFormat().format(giaKM));
+        });
+        // $("#giaKhuyenMai").blur(function(){
+        //     var giaKM = $("#giaKhuyenMai").val();
+        //     var number = parseInt(giaKM);
+        //     $("#giaKhuyenMai").val(new Intl.NumberFormat().format(giaKM));
+        //     $("#giaKhuyenMaiA").val(number);
+        // });
+        // $("#giaBan").blur(function(){
+        //     var giaKM = $("#giaKhuyenMai").val();
+        //
+        //     if(giaBan < giaKM){
+        //         toastr.error("Giá bán không được nhỏ hơn giá khuyến mãi");
+        //         $("#submit").prop('disabled', true);
+        //     } else {
+        //         $("#submit").prop('disabled', false);
+        //     }
+        // });
 
     });
 

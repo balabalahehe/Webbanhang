@@ -19,11 +19,12 @@ Route::get('/login', 'DangKyTaiKhoanFakeController@viewLogin');
 Route::post('/login', 'DangKyTaiKhoanFakeController@login')->name('login');
 
 Route::prefix('/admin')->group(function () {
-    Route::get('/nhacungcap', 'NhaCungCapController@index')->name('indexNhaCungCap');
-    Route::post('/nhacungcap', 'NhaCungCapController@store')->name('themNhaCungCap');
-    Route::get('/nhacungcap/{id}', 'NhaCungCapController@edit')->name('editNhaCungCap');
-    Route::post('/nhacungcap/update', 'NhaCungCapController@update')->name('updateNhaCungCap');
-
+    Route::prefix('/nhacungcap')->group(function () {
+        Route::get('/', 'NhaCungCapController@index')->name('indexNhaCungCap');
+        Route::post('/', 'NhaCungCapController@store')->name('themNhaCungCap');
+        Route::get('/{id}', 'NhaCungCapController@edit')->name('editNhaCungCap');
+        Route::post('/update', 'NhaCungCapController@update')->name('updateNhaCungCap');
+    });
     Route::get('/loaisanpham', 'LoaiSanPhamController@index')->name('indexLoaiSanPham');
     Route::get('/loaiSanPhamThayDoiTinhTrang/{id}', 'LoaiSanPhamController@loaiSanPhamThayDoiTinhTrang');
     Route::post('/loaisanphamindex', 'LoaiSanPhamController@store')->name('themLoaiSanPham');
@@ -34,7 +35,10 @@ Route::prefix('/admin')->group(function () {
     Route::get('/loaisanpham/delete/{id}', 'LoaiSanPhamController@destroy')->name('deleteLoaiSanPham');
     Route::get('/loaisanpham/find/{slugName}', 'LoaiSanPhamController@findSlugName')->name('findSlugName');
 
-    Route::get('/sanpham/create', 'SanPhamController@create')->name('viewThemSanPham');
-    Route::post('/sanpham/create', 'SanPhamController@store')->name('themSanPham');
+    Route::prefix('/sanpham')->group(function () {
+        Route::get('/create', 'SanPhamController@create')->name('viewThemSanPham');
+        Route::post('/create', 'SanPhamController@store')->name('themSanPham');
+        Route::get('/', 'SanPhamController@index')->name('indexSanPham');
+    });
 
 });

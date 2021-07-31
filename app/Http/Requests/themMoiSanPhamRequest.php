@@ -26,7 +26,7 @@ class themMoiSanPhamRequest extends FormRequest
         return [
             'tenSanPham'           => 'required|min:7|max:50|unique:san_phams,tenSanPham',
             'slugTenSanPham'       => 'required',
-            'hinhAnh'              => 'required|dimensions:min_width=100,min_height=100',
+            'hinhAnh'              => 'required',
             'moTaNgan'             => 'required',
             'moTaDai'              => 'required',
             'loaiSanPham_id'       => 'required|exists:loai_san_phams,id',

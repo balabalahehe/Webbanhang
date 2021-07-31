@@ -48,6 +48,17 @@
                         Quản lý nhà cung cấp
                     </a>
                 </li>
+                <li class="app-sidebar__heading">Sản Phẩm</li>
+                <li>
+                    <a href="{{ Route('indexSanPham') }}">
+                        <i class="metismenu-icon pe-7s-rocket"></i>
+                        Danh sách
+                    </a>
+                    <a href="{{ Route('viewThemSanPham') }}">
+                        <i class="metismenu-icon pe-7s-rocket"></i>
+                        Thêm mới
+                    </a>
+                </li>
             </ul>
         </div>
     </div>

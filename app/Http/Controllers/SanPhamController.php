@@ -16,7 +16,8 @@ class SanPhamController extends Controller
      */
     public function index()
     {
-        //
+        $data = SanPham::all();
+        return view('admin.sanpham.index', compact('data'));
     }
 
     /**
@@ -39,19 +40,15 @@ class SanPhamController extends Controller
      */
     public function store(themMoiSanPhamRequest $request)
     {
-        if($request->hasFile('hinhAnh')){
-            $current_timestamp = Carbon::now()->setTimezone('Asia/Ho_Chi_Minh')->timestamp;
-            $image = $request->file('hinhAnh');
-            $filename = $request->slugTenSanPham . '-' .$current_timestamp . '.jpg';
-            $storedPath = $image->move('images/sanPham', $filename);
+        if($request->giaKhuyenMai >= $request->giaBan){
+            toastr()->error('Gía khuyến mãi không lớn hơn giá bán');
+            return redirect()->back()->withInput($request->all());
         }
-        $data = $request->all();
-        $data['hinhAnh'] = $filename;
 
-        SanPham::create($data);
+        SanPham::create($request->all());
         toastr()->success('Thêm mới sản phẩm thành công');
 
-        return redirect()->route('viewThemSanPham');
+        return redirect()->route('indexSanPham');
     }
 
     /**
