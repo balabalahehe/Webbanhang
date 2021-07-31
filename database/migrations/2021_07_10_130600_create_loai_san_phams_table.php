@@ -18,6 +18,7 @@ class CreateLoaiSanPhamsTable extends Migration
             $table->string('tenLoaiSanPham');
             $table->string('slugLoaiSanPham');
             $table->integer('tinhTrang');
+            $table->integer('is_delete')->default(0);
             $table->timestamps();
         });
     }

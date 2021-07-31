@@ -7,6 +7,7 @@ use App\Models\LoaiSanPham;
 use App\Models\SanPham;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\DB;
 class SanPhamController extends Controller
 {
     /**
@@ -16,6 +17,15 @@ class SanPhamController extends Controller
      */
     public function index()
     {
+        // $data = DB::table('san_phams')
+        //     ->join('loai_san_phams', 'san_phams.loaiSanPham_id', '=', 'loai_san_phams.id')
+        //     ->select('san_phams.*', 'loai_san_phams.tenLoaiSanPham')
+        //     ->get();
+
+        // $data = SanPham::all();
+        // $loaiSanPham = LoaiSanPham::all();
+        // return view('admin.sanpham.index', compact('data', 'loaiSanPham'));
+
         $data = SanPham::all();
         return view('admin.sanpham.index', compact('data'));
     }
@@ -27,7 +37,10 @@ class SanPhamController extends Controller
      */
     public function create()
     {
-        $loaiSanPham = LoaiSanPham::where('tinhTrang', \App\Models\LoaiSanPham::tinhTrang_Open)->get();
+        $loaiSanPham = LoaiSanPham::where('tinhTrang', \App\Models\LoaiSanPham::tinhTrang_Open)
+                                    ->where('is_delete', false)
+                                    ->where('id', '>', 2)
+                                    ->get();
 
         return view('admin.sanpham.create', compact('loaiSanPham'));
     }

@@ -79,15 +79,31 @@
                                     <th class="text-center"> {{ $key + 1 }}</th>
                                     <td>{{ $value->tenLoaiSanPham }}</td>
                                     <td>{{ $value->slugLoaiSanPham }}</td>
-                                    <td class="tinhTrang" data-id={{$value->id}}>{{ $value->tinhTrang == 0 ? 'Tạm dừng' : 'Còn hoạt động'}}</td>
-                                    <td class="text-center">
-                                        <a class="btn btn-primary" href="/admin/loaisanpham/{{ $value->id }}">
-                                            Edit
-                                        </a>
-                                        <a data-id={{ $value->id }} class="xoaLoaiSanPham btn btn-warning" type="button" data-toggle="modal" data-target="#exampleModal">
-                                            Delete
-                                        </a>
-                                    </td>
+                                    @if($value->id < 3)
+                                        <td colspan="2" class="text-danger text-center">Hệ thống</td>
+                                    @else
+                                        <td class="tinhTrang" data-id={{$value->id}}>
+                                            @if($value->is_delete == true)
+                                                <span class="text-danger">Đã bị xóa</span>
+                                            @else
+                                                {{ $value->tinhTrang == 0 ? 'Tạm dừng' : 'Còn hoạt động'}}
+                                            @endif
+                                        </td>
+                                        <td class="text-center">
+                                            @if($value->is_delete == true)
+                                                <a data-id={{ $value->id }} class="btn btn-primary" href="">
+                                                    Phục Hồi
+                                                </a>
+                                            @else
+                                            <a class="btn btn-primary" href="/admin/loaisanpham/{{ $value->id }}">
+                                                Edit
+                                            </a>
+                                            <a data-id={{ $value->id }} class="xoaLoaiSanPham btn btn-warning" type="button" data-toggle="modal" data-target="#exampleModal">
+                                                    Delete
+                                            </a>
+                                            @endif
+                                        </td>
+                                    @endif
                                 </tr>
                                 @endforeach
                             </tbody>
@@ -114,10 +130,15 @@
             <div class="modal-body">
                 <input id="idCanXoa" hidden>
                 <p class="mb-0">Bạn có muốn xóa loại sản phẩm này không???</p>
+                <p><span style="color: #ff0000;"><strong>X&oacute;a kiểu 1:</strong></span> X&oacute;a v&agrave; Tất Cả Sản Phẩm c&oacute; T&ecirc;n Loại Sản Phẩm L&agrave;</p>
+                <p><span style="color: #ff0000;"><strong>X&oacute;a kiểu 2:</strong> </span>X&oacute;a Mềm v&agrave; Chuyển Sản Phẩm th&agrave;nh Chưa Ph&acirc;n Loại</p>
+                <p><span style="color: #ff0000;"><strong>X&oacute;a kiểu 3:</strong></span> X&oacute;a Mềm v&agrave; Chuyển Sản Phẩm th&agrave;nh Khuyến M&atilde;i</p>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                <button id="taoChacChan" type="button" class="btn btn-primary" data-dismiss="modal">Tao Chắc Chắn</button>
+                <button id="deleteType_1" type="button" class="btn btn-primary" data-dismiss="modal">Xóa Type 1</button>
+                <button id="deleteType_2" type="button" class="btn btn-primary" data-dismiss="modal">Xóa Type 2</button>
+                <button id="deleteType_3" type="button" class="btn btn-primary" data-dismiss="modal">Xóa Type 3</button>
             </div>
         </div>
     </div>
@@ -163,15 +184,56 @@
             console.log('Đã bấm nút xóa loại sản phẩm có id ' + id);
         })
 
-        $("#taoChacChan").click(function(){
+        $("#deleteType_1").click(function(){
             let idCanXoa = $("#idCanXoa").val();
-            console.log('Đã bấm nút tao chắc chắn rồi đó hỉ' + idCanXoa);
             $.ajax({
-                url: '/admin/loaisanpham/delete/' + idCanXoa,
+                url: '/admin/loaisanpham/deleteType_1/' + idCanXoa,
                 type: 'get',
-                success:function(){
-                    // row.remove();
-                    toastr.success('Đã xóa sản phẩm thành công');
+                success:function($data){
+                    // console.log($data[1]);
+                    if($data[1] == true){
+                        toastr.success('Đã xóa sản phẩm thành công');
+                    } else {
+                        toastr.error("Ê ku!, chơi rứa đủ rồi!");
+                    }
+                },
+                error:function(){
+                    toastr.error('Có lỗi rồi chú ơi');
+                }
+            });
+        });
+
+        $("#deleteType_2").click(function(){
+            let idCanXoa = $("#idCanXoa").val();
+            $.ajax({
+                url: '/admin/loaisanpham/deleteType/' + idCanXoa + '/' + 2,
+                type: 'get',
+                success:function($data){
+                    // console.log($data[1]);
+                    if($data[1] == true){
+                        toastr.success('Đã xóa sản phẩm thành công');
+                    } else {
+                        toastr.error("Ê ku!, chơi rứa đủ rồi!");
+                    }
+                },
+                error:function(){
+                    toastr.error('Có lỗi rồi chú ơi');
+                }
+            });
+        });
+
+        $("#deleteType_3").click(function(){
+            let idCanXoa = $("#idCanXoa").val();
+            $.ajax({
+                url: '/admin/loaisanpham/deleteType/' + idCanXoa + '/' + 1,
+                type: 'get',
+                success:function($data){
+                    // console.log($data[1]);
+                    if($data[1] == true){
+                        toastr.success('Đã xóa sản phẩm thành công');
+                    } else {
+                        toastr.error("Ê ku!, chơi rứa đủ rồi!");
+                    }
                 },
                 error:function(){
                     toastr.error('Có lỗi rồi chú ơi');

@@ -12,6 +12,7 @@ class LoaiSanPham extends Model
         'tenLoaiSanPham',
         'slugLoaiSanPham',
         'tinhTrang',
+        'is_delete',
     ];
 
     const tinhTrang_Open  = 1;

@@ -6,6 +6,7 @@ use App\Http\Requests\chinhSuaLoaiSanPhamRequest;
 use App\Http\Requests\themMoiLoaiSanPhamRequest;
 use App\Models\LichSuThaoTac;
 use App\Models\LoaiSanPham;
+use App\Models\SanPham;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\DB;
@@ -19,6 +20,7 @@ class LoaiSanPhamController extends Controller
     public function index()
     {
         $data = LoaiSanPham::paginate(10);
+        // $data = LoaiSanPham::where('id', '>', 2)->paginate(10);
         $loaiSanPham = null;
         return view('admin.loaisanpham.index', compact('data', 'loaiSanPham'));
     }
@@ -119,6 +121,9 @@ class LoaiSanPhamController extends Controller
 
     public function loaiSanPhamThayDoiTinhTrang($id)
     {
+        if($id < 3){
+            return -1;
+        }
         $loaiSanPham = LoaiSanPham::find($id);
         $loaiSanPham->tinhTrang = ($loaiSanPham->tinhTrang + 1) % 2;
         $loaiSanPham->save();
@@ -132,13 +137,41 @@ class LoaiSanPhamController extends Controller
      * @param  \App\LoaiSanPham  $loaiSanPham
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function deleteType_1($id)
     {
+        $status = true;
+        if($id < 3){
+            $status = false;
+            return response()->json($status);
+        }
         $loaiSanPham = LoaiSanPham::find($id);
 
         if(!empty($loaiSanPham)){
+            $sanPham = SanPham::where('loaiSanPham_id', $id);
+            $sanPham->delete();
             $loaiSanPham->delete();
-            return response()->json($loaiSanPham);
+            return response()->json([$loaiSanPham, $status]);
+        }
+    }
+
+    public function deleteType($id, $type)
+    {
+        $status = true;
+        if($id < 3 || $type > 2 || $type < 1){
+            $status = false;
+            return response()->json($status);
+        }
+        $loaiSanPham = LoaiSanPham::find($id);
+
+        if(!empty($loaiSanPham)){
+            $sanPham = SanPham::where('loaiSanPham_id', $id)->get();
+            foreach($sanPham as $value){
+                $value->loaiSanPham_id = $type;
+                $value->save();
+            }
+            $loaiSanPham->is_delete = true;
+            $loaiSanPham->save();
+            return response()->json([$loaiSanPham, $status]);
         }
     }
 

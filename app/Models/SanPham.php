@@ -20,4 +20,9 @@ class SanPham extends Model
         'tinhTrang',
     ];
 
+    public function loaiSanPham()
+    {
+        return $this->belongsTo('\App\Models\LoaiSanPham', 'loaiSanPham_id', 'id');
+    }
+
 }
