@@ -43,3 +43,8 @@ Route::prefix('/admin')->group(function () {
     });
 
 });
+
+Route::get('/', 'ChiTietNhapKhoController@index');
+Route::post('/', 'TmpChiTietNhapKhoController@store')->name('tmpChiTietNhapKho');
+
+Route::get('/nhapKhoSanPham', 'ChiTietNhapKhoController@store')->name('nhapKhoSanPham');

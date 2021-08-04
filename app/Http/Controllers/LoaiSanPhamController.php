@@ -162,17 +162,19 @@ class LoaiSanPhamController extends Controller
             return response()->json($status);
         }
         $loaiSanPham = LoaiSanPham::find($id);
-
-        if(!empty($loaiSanPham)){
-            $sanPham = SanPham::where('loaiSanPham_id', $id)->get();
-            foreach($sanPham as $value){
-                $value->loaiSanPham_id = $type;
-                $value->save();
+        
+        DB::transaction(function () use($id, $type, $status) {
+            if(!empty($loaiSanPham)){
+                $sanPham = SanPham::where('loaiSanPham_id', $id)->get();
+                foreach($sanPham as $value){
+                    $value->loaiSanPham_id = $type;
+                    $value->save();
+                }
+                $loaiSanPham->is_delete = true;
+                $loaiSanPham->sav();
+                return response()->json([$loaiSanPham, $status]);
             }
-            $loaiSanPham->is_delete = true;
-            $loaiSanPham->save();
-            return response()->json([$loaiSanPham, $status]);
-        }
+        });
     }
 
     public function findSlugName($slugName)
