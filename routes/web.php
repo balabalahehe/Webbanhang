@@ -48,3 +48,4 @@ Route::get('/', 'ChiTietNhapKhoController@index');
 Route::post('/', 'TmpChiTietNhapKhoController@store')->name('tmpChiTietNhapKho');
 
 Route::get('/nhapKhoSanPham', 'ChiTietNhapKhoController@store')->name('nhapKhoSanPham');
+Route::post('/nhapKhoSanPham2', 'ChiTietNhapKhoController@store2')->name('nhapKhoSanPham2');
