@@ -15,7 +15,7 @@ class ChiTietNhapKhoController extends Controller
     public function index()
     {
         $tmpChiTietNhapKho = tmpChiTietNhapKho::all();
-        $sanPham = SanPham::where('tinhTrang', 1)->get();
+        // $sanPham = SanPham::where('tinhTrang', 1)->get();
         $nhaCungCap = NhaCungCap::where('tinhTrang', 1)->get();
 
         return view('admin.nhapKho.index', compact('sanPham', 'nhaCungCap', 'tmpChiTietNhapKho'));
@@ -42,5 +42,13 @@ class ChiTietNhapKhoController extends Controller
                 $value->delete();
             }
         });
+    }
+
+    public function store2(Request $request)
+    {
+        $data = $request->toArray();
+        foreach($data['myrows'] as $value){
+            dd($value['Tên Sản Phẩm']);
+        }
     }
 }
