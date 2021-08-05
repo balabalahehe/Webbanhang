@@ -13,12 +13,8 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/register', 'DangKyTaiKhoanFakeController@index');
-Route::post('/register', 'DangKyTaiKhoanFakeController@store')->name('register');
-Route::get('/login', 'DangKyTaiKhoanFakeController@viewLogin');
-Route::post('/login', 'DangKyTaiKhoanFakeController@login')->name('login');
 
-Route::prefix('/admin')->group(function () {
+Route::group(['prefix' => 'admin','middleware' => 'xxx'], function() {
     Route::prefix('/nhacungcap')->group(function () {
         Route::get('/', 'NhaCungCapController@index')->name('indexNhaCungCap');
         Route::post('/', 'NhaCungCapController@store')->name('themNhaCungCap');
@@ -42,7 +38,14 @@ Route::prefix('/admin')->group(function () {
         Route::get('/', 'SanPhamController@index')->name('indexSanPham');
     });
 
+    Route::get('/register', 'AdminController@registerView');
+    Route::post('/register', 'AdminController@register')->name('adminRegister');
+
 });
+
+Route::get('/admin/login', 'AdminController@loginView');
+Route::get('/admin/logout', 'AdminController@logout');
+Route::post('/admin/login', 'AdminController@login')->name('adminLogin');
 
 Route::get('/', 'ChiTietNhapKhoController@index');
 Route::post('/', 'TmpChiTietNhapKhoController@store')->name('tmpChiTietNhapKho');

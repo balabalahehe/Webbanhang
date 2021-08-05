@@ -59,6 +59,12 @@
                         Thêm mới
                     </a>
                 </li>
+                <li>
+                    <a href="/admin/logout">
+                        <i class="metismenu-icon pe-7s-rocket"></i>
+                        Đăng xuất
+                    </a>
+                </li>
             </ul>
         </div>
     </div>
