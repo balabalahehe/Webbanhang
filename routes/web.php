@@ -47,8 +47,16 @@ Route::get('/admin/login', 'AdminController@loginView');
 Route::get('/admin/logout', 'AdminController@logout');
 Route::post('/admin/login', 'AdminController@login')->name('adminLogin');
 
-Route::get('/', 'ChiTietNhapKhoController@index');
-Route::post('/', 'TmpChiTietNhapKhoController@store')->name('tmpChiTietNhapKho');
+// Route::get('/', 'ChiTietNhapKhoController@index');
+// Route::post('/', 'TmpChiTietNhapKhoController@store')->name('tmpChiTietNhapKho');
 
 Route::get('/nhapKhoSanPham', 'ChiTietNhapKhoController@store')->name('nhapKhoSanPham');
 Route::post('/nhapKhoSanPham2', 'ChiTietNhapKhoController@store2')->name('nhapKhoSanPham2');
+
+Route::get('/', function(){
+    return view('client.master');
+});
+
+Route::post('/register', 'UserController@store')->name('clientRegister');
+Route::post('/login', 'UserController@login')->name('clientLogin');
+Route::get('/active/{hash}', 'UserController@active');
