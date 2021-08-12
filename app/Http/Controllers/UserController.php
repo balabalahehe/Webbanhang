@@ -36,11 +36,12 @@ class UserController extends Controller
         $user = Auth::guard('user')->attempt($data);
         if($user){
             $user = Auth::guard('user')->user();
-            if($user->is_verifymail == 0){
-                dd('chua xac minh email');
-            } else {
-                dd('Ok, ban da thoa dieu kien');
-            }
+            echo 'login thanh cong';
+            // if($user->is_verifymail == 0){
+            //     dd('chua xac minh email');
+            // } else {
+            //     dd('Ok, ban da thoa dieu kien');
+            // }
         } else {
             dd('login khong thanh cong');
         }
@@ -50,15 +51,22 @@ class UserController extends Controller
     {
         $user = User::where('hash', $hash)->first();
         if($user){
-            if($user->is_verifymail == 0){
-                $user->is_verifymail = 1;
-                $user->save();
-                echo 'Oke, da kich hoat tai khoan thanh cong';
-            } else {
-                echo 'Tai khoan da duoc kich hoat roi';
-            }
+            echo 'login Thanh Cong';
+            // if($user->is_verifymail == 0){
+            //     $user->is_verifymail = 1;
+            //     $user->save();
+            //     echo 'Oke, da kich hoat tai khoan thanh cong';
+            // } else {
+            //     echo 'Tai khoan da duoc kich hoat roi';
+            // }
         } else {
             echo 'Het Viec Lam A???';
         }
+    }
+
+    public function logout()
+    {
+        Auth::guard('user')->logout();
+        echo 'Logout Thành Công';
     }
 }

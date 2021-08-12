@@ -162,7 +162,7 @@ class LoaiSanPhamController extends Controller
             return response()->json($status);
         }
         $loaiSanPham = LoaiSanPham::find($id);
-        
+
         DB::transaction(function () use($id, $type, $status) {
             if(!empty($loaiSanPham)){
                 $sanPham = SanPham::where('loaiSanPham_id', $id)->get();
@@ -171,7 +171,7 @@ class LoaiSanPhamController extends Controller
                     $value->save();
                 }
                 $loaiSanPham->is_delete = true;
-                $loaiSanPham->sav();
+                $loaiSanPham->save();
                 return response()->json([$loaiSanPham, $status]);
             }
         });

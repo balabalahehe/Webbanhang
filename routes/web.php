@@ -60,3 +60,14 @@ Route::get('/', function(){
 Route::post('/register', 'UserController@store')->name('clientRegister');
 Route::post('/login', 'UserController@login')->name('clientLogin');
 Route::get('/active/{hash}', 'UserController@active');
+
+Route::get('/testA', 'TestController@index');
+Route::get('/testB', function(){
+    return view('chat');
+});
+
+Route::get('/chat', 'ChatController@index');
+Route::post('/chat', 'ChatController@create');
+Route::get('/load', 'ChatController@load');
+
+Route::get('/logout', 'UserController@logout');

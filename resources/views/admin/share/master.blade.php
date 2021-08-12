@@ -13,6 +13,7 @@
             <div class="app-main__outer">
                 <div class="app-main__inner">
                     <div class="app-page-title">
+
                         @yield('title')
                     </div>
                     @yield('content')
