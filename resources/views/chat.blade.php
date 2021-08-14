@@ -24,6 +24,7 @@
 									<span>Fake Chat Messenger</span>
 									<p>Hello, {{ $user->fullname }} | <a href="/logout">Logout |</a></p>
                                     {{-- <p><button id="clickLoad"> Click Load </button></p> --}}
+                                    <p><button id="clickDelete"> Delete All </button></p>
 								</div>
 							</div>
 						</div>
@@ -107,6 +108,16 @@
                 }
             });
 
+            $("#clickDelete").click(function(){
+                $.ajax({
+                    url  : '/chat/delete',
+                    type : 'get',
+                    success: function(){
+                        location.reload();
+                    }
+                });
+            });
+
             setInterval(function(){
                 $.ajax({
                     url  : '/load',
@@ -124,25 +135,6 @@
                     },
                 });
             }, 1500);
-
-
-            // $("#clickLoad").click(function() {
-            //     $.ajax({
-            //         url  : '/load',
-            //         type : 'get',
-            //         success: function($data){
-            //             console.log($data.data);
-            //             if($data.data.length > 0){
-            //                 $.each($data.data, function(key, value){
-            //                     var date_format = new Date(value.created_at);
-            //                     var time = date_format.getHours()+':' + date_format.getMinutes() + ':' + date_format.getSeconds();
-            //                     var html = "<div class='d-flex justify-content-start mb-4'><div class='img_cont_msg'><img src='https://static.turbosquid.com/Preview/001292/481/WV/_D.jpg' class='rounded-circle user_img_msg'></div><div class='msg_cotainer'>"+value.content+"<span class='msg_time'>"+time+"</span></div></div>";
-            //                     $("#bodychat").append(html);
-            //                 });
-            //             }
-            //         },
-            //     });
-            // });
         });
     </script>
 </html>

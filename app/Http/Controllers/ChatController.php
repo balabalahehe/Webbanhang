@@ -46,4 +46,13 @@ class ChatController extends Controller
         }
         return response()->json(['data' => $data]);
     }
+
+    public function deleteAll()
+    {
+        $data = Chat::all();
+        foreach($data as $value){
+            $value->delete();
+        }
+        return $this->index();
+    }
 }

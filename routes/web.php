@@ -71,3 +71,12 @@ Route::post('/chat', 'ChatController@create');
 Route::get('/load', 'ChatController@load');
 
 Route::get('/logout', 'UserController@logout');
+Route::get('chat/delete', 'ChatController@deleteALl');
+
+
+Route::get('/GetView', 'NewChatController@index');
+
+Route::get('/newlogin/{id}', 'NewChatController@newLogin');
+Route::get('/newLogout', 'NewChatController@newLogout');
+Route::post('/newMessage', 'NewChatController@newMessage');
+Route::get('/loadAllMessage', 'NewChatController@loadAllMessage');
