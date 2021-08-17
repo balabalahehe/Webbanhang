@@ -18,4 +18,4 @@ use Illuminate\Support\Facades\Route;
 //     return $request->user();
 // });
 
-Route::get('/getData', 'GetDataController@getData');
+Route::post('/getData', 'GetDataController@getData');

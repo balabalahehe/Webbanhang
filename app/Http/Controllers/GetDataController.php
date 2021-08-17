@@ -14,5 +14,7 @@ class GetDataController extends Controller
             $content .= "My id is ". $id . " And My value is ". $value . "\n";
         }
         Storage::disk('local')->append('testquoclong.txt', $content);
+
+        return response()->json('oke');
     }
 }
