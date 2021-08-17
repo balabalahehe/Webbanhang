@@ -8,6 +8,8 @@
 		<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/malihu-custom-scrollbar-plugin/3.1.5/jquery.mCustomScrollbar.min.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.min.js"></script>
+        <script src="https://js.pusher.com/7.0/pusher.min.js"></script>
+        <script src="/js/app.js"></script>
         <link rel="stylesheet" type="text/css" href="chat.css">
 	</head>
 	<body>
@@ -31,7 +33,7 @@
 								<div class="user_info">
 									<span>Chat Messenger</span>
 									<p>Hello, {{ empty($user) ? 'Chưa login' : $user->email }} | <a href="/newLogout">Logout |</a></p>
-                                    <p><button id="clickDelete"> Delete All </button></p>
+                                    <p><button v-on:click="deleteAllMessage"> Delete All </button></p>
 								</div>
 							</div>
 						</div>
@@ -82,7 +84,7 @@
             }
         });
         $(document).ready(function() {
-
+            $('#bodychat').animate({scrollTop: $('#bodychat').get(0).scrollHeight});
         });
     </script>
     <script>
@@ -100,6 +102,21 @@
                         this.userLogin = e.data[1];
                         this.allMessage = e.data[0];
                     });
+
+
+                Echo.channel('chat')
+                    .listen('newMessage', (e) => {
+                        console.log(e);
+                    });
+
+                // setInterval((e) => {
+                //     axios
+                //         .get('/loadFake')
+                //         .then((e) => {
+                //             this.allMessage = this.allMessage.concat(e.data.data);
+                //         });
+                //     // $('#bodychat').scrollTop($('#bodychat').height());
+                // }, 1500);
             },
             methods: {
                 sendMessage(){
@@ -112,7 +129,17 @@
                             this.allMessage.push(e.data.data)
                         });
                     this.myMessage = "";
-                }
+                    $('#bodychat').animate({scrollTop: $('#bodychat').get(0).scrollHeight});
+                },
+                deleteAllMessage(){
+                    axios
+                        .get('/DeleteAllMessage')
+                        .then((e) => {
+                            if(e.data.trangThai == 'done'){
+                                this.allMessage = [];
+                            }
+                        });
+                },
             },
         });
     </script>
