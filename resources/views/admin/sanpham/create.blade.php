@@ -187,10 +187,10 @@
             var tenSanPham = $("#tenSanPham").val();
             $('#slugTenSanPham').val(ChangeToSlug(tenSanPham));
         });
-        $("#giaKhuyenMai").keyup(function(){
-            var giaKM = $("#giaKhuyenMai").val();
-            $("#giaKhuyenMai").val(new Intl.NumberFormat().format(giaKM));
-        });
+        // $("#giaKhuyenMai").keyup(function(){
+        //     var giaKM = $("#giaKhuyenMai").val();
+        //     $("#giaKhuyenMai").val(new Intl.NumberFormat().format(giaKM));
+        // });
         // $("#giaKhuyenMai").blur(function(){
         //     var giaKM = $("#giaKhuyenMai").val();
         //     var number = parseInt(giaKM);

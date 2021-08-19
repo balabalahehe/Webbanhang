@@ -12,9 +12,14 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
+Route::get('/register', 'AdminController@registerView');
+Route::post('/register', 'AdminController@register')->name('adminRegister');
+Route::get('/admin/login', 'AdminController@loginView');
+Route::get('/admin/logout', 'AdminController@logout');
+Route::post('/admin/login', 'AdminController@login')->name('adminLogin');
 
 
-Route::group(['prefix' => 'admin','middleware' => 'xxx'], function() {
+Route::group(['prefix' => 'admin'], function() {
     Route::prefix('/nhacungcap')->group(function () {
         Route::get('/', 'NhaCungCapController@index')->name('indexNhaCungCap');
         Route::post('/', 'NhaCungCapController@store')->name('themNhaCungCap');
@@ -38,20 +43,11 @@ Route::group(['prefix' => 'admin','middleware' => 'xxx'], function() {
         Route::get('/', 'SanPhamController@index')->name('indexSanPham');
     });
 
-    Route::get('/register', 'AdminController@registerView');
-    Route::post('/register', 'AdminController@register')->name('adminRegister');
+    Route::get('/nhapKhoSanPham', 'ChiTietNhapKhoController@index')->name('nhapKhoSanPham');
+    Route::post('/nhapKhoSanPham', 'ChiTietNhapKhoController@store')->name('nhapKhoSanPham');
 
 });
 
-Route::get('/admin/login', 'AdminController@loginView');
-Route::get('/admin/logout', 'AdminController@logout');
-Route::post('/admin/login', 'AdminController@login')->name('adminLogin');
-
-// Route::get('/', 'ChiTietNhapKhoController@index');
-// Route::post('/', 'TmpChiTietNhapKhoController@store')->name('tmpChiTietNhapKho');
-
-Route::get('/nhapKhoSanPham', 'ChiTietNhapKhoController@store')->name('nhapKhoSanPham');
-Route::post('/nhapKhoSanPham2', 'ChiTietNhapKhoController@store2')->name('nhapKhoSanPham2');
 
 Route::get('/', function(){
     return view('client.master');
@@ -61,23 +57,19 @@ Route::post('/register', 'UserController@store')->name('clientRegister');
 Route::post('/login', 'UserController@login')->name('clientLogin');
 Route::get('/active/{hash}', 'UserController@active');
 
-Route::get('/testA', 'TestController@index');
-Route::get('/testB', function(){
-    return view('chat');
-});
 
-Route::get('/chat', 'ChatController@index');
-Route::post('/chat', 'ChatController@create');
-Route::get('/load', 'ChatController@load');
+// Route::get('/chat', 'ChatController@index');
+// Route::post('/chat', 'ChatController@create');
+// Route::get('/load', 'ChatController@load');
 
-Route::get('/logout', 'UserController@logout');
-Route::get('chat/delete', 'ChatController@deleteALl');
+// Route::get('/logout', 'UserController@logout');
+// Route::get('chat/delete', 'ChatController@deleteALl');
 
 
-Route::get('/GetView', 'NewChatController@index');
-Route::get('/DeleteAllMessage', 'NewChatController@deleteAll');
-Route::get('/newlogin/{id}', 'NewChatController@newLogin');
-Route::get('/newLogout', 'NewChatController@newLogout');
-Route::post('/newMessage', 'NewChatController@newMessage');
-Route::get('/loadAllMessage', 'NewChatController@loadAllMessage');
-Route::get('/loadFake', 'NewChatController@loadFake');
+// Route::get('/GetView', 'NewChatController@index');
+// Route::get('/DeleteAllMessage', 'NewChatController@deleteAll');
+// Route::get('/newlogin/{id}', 'NewChatController@newLogin');
+// Route::get('/newLogout', 'NewChatController@newLogout');
+// Route::post('/newMessage', 'NewChatController@newMessage');
+// Route::get('/loadAllMessage', 'NewChatController@loadAllMessage');
+// Route::get('/loadFake', 'NewChatController@loadFake');

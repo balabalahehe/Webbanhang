@@ -125,7 +125,7 @@
             $('#myTable > tbody').append(html);
 
             $.ajax({
-            url: "{{ Route('tmpChiTietNhapKho') }}",
+            url: "",
                 type: 'post',
                 data: {
                     sanPham_id      : sanPham_id,
@@ -165,7 +165,7 @@
             console.log(obj);
             console.log(json);
             $.ajax({
-                url: "{{ Route('nhapKhoSanPham2') }}",
+                url: "",
                 type: 'post',
                 data: obj,
                 success: function(){

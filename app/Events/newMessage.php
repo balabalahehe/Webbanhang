@@ -26,8 +26,7 @@ class newMessage implements ShouldBroadcast
 
     public function broadcastOn()
     {
-        return new Channel('chat');
-        // return new PrivateChannel('channel-name');
+        return new PrivateChannel('chat');
     }
 
     public function broadcastWith()

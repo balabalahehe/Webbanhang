@@ -11,6 +11,7 @@
         <script src="https://js.pusher.com/7.0/pusher.min.js"></script>
         <script src="/js/app.js"></script>
         <link rel="stylesheet" type="text/css" href="chat.css">
+        <meta name="csrf-token" content="{{ csrf_token() }}">
 	</head>
 	<body>
 		<div id="app" class="container-fluid">
@@ -78,11 +79,11 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
     <script>
-        $.ajaxSetup({
-        headers: {
-            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            }
-        });
+        // $.ajaxSetup({
+        // headers: {
+        //     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        //     }
+        // });
         $(document).ready(function() {
             $('#bodychat').animate({scrollTop: $('#bodychat').get(0).scrollHeight});
         });
@@ -103,8 +104,7 @@
                         this.allMessage = e.data[0];
                     });
 
-
-                Echo.channel('chat')
+                Echo.private('chat')
                     .listen('newMessage', (e) => {
                         console.log(e);
                     });
