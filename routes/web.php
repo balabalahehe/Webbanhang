@@ -44,8 +44,12 @@ Route::group(['prefix' => 'admin'], function() {
     });
 
     Route::get('/nhapKhoSanPham', 'ChiTietNhapKhoController@index')->name('nhapKhoSanPham');
-    Route::post('/nhapKhoSanPham', 'ChiTietNhapKhoController@store')->name('nhapKhoSanPham');
+    Route::get('/nhapKho', 'ChiTietNhapKhoController@store');
 
+    Route::post('/tmpChiTietNhapKho', 'TmpChiTietNhapKhoController@store');
+
+    Route::get('/tmpChiTietNhapKho/{id}', 'TmpChiTietNhapKhoController@destroy');
+    Route::get('/danhSachNhapKho', 'ChiTietNhapKhoController@show')->name('danhSachNhapKho');
 });
 
 
@@ -66,10 +70,10 @@ Route::get('/active/{hash}', 'UserController@active');
 // Route::get('chat/delete', 'ChatController@deleteALl');
 
 
-// Route::get('/GetView', 'NewChatController@index');
-// Route::get('/DeleteAllMessage', 'NewChatController@deleteAll');
-// Route::get('/newlogin/{id}', 'NewChatController@newLogin');
-// Route::get('/newLogout', 'NewChatController@newLogout');
-// Route::post('/newMessage', 'NewChatController@newMessage');
-// Route::get('/loadAllMessage', 'NewChatController@loadAllMessage');
-// Route::get('/loadFake', 'NewChatController@loadFake');
+Route::get('/GetView', 'NewChatController@index');
+Route::get('/DeleteAllMessage', 'NewChatController@deleteAll');
+Route::get('/newlogin/{id}', 'NewChatController@newLogin');
+Route::get('/newLogout', 'NewChatController@newLogout');
+Route::post('/newMessage', 'NewChatController@newMessage');
+Route::get('/loadAllMessage', 'NewChatController@loadAllMessage');
+Route::get('/loadFake', 'NewChatController@loadFake');

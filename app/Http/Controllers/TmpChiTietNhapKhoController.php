@@ -46,11 +46,11 @@ class TmpChiTietNhapKhoController extends Controller
             }
         }
         if($status == true){
-            tmpChiTietNhapKho::create($request->all());
-            return response()->json($status);
+            $data = tmpChiTietNhapKho::create($request->all());
+            return response()->json(['status' => $status, 'data' => $data->id]);
         } else {
             // status = false;
-            return response()->json($status);
+            return response()->json(['status' => $status]);
         }
     }
 
@@ -94,8 +94,14 @@ class TmpChiTietNhapKhoController extends Controller
      * @param  \App\tmpChiTietNhapKho  $tmpChiTietNhapKho
      * @return \Illuminate\Http\Response
      */
-    public function destroy(tmpChiTietNhapKho $tmpChiTietNhapKho)
+    public function destroy($id)
     {
-        //
+        $dataDelete = tmpChiTietNhapKho::find($id);
+        if($dataDelete){
+            $dataDelete->delete();
+            return response()->json(['trangThai' => 'success']);
+        } else {
+            return response()->json(['trangThai' => 'error']);
+        }
     }
 }

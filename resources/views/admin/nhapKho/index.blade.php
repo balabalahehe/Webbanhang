@@ -80,7 +80,9 @@
                                     <td>{{ $value->donGiaNhap }}</td>
                                     <td>{{ $value->nhaCungCap->tenNhaCungCap }}</td>
                                     <td>{{ $value->is_congNo }}</td>
-                                    <td></td>
+                                    <td>
+                                        <button class="delete btn btn-danger" data-id="{{ $value->id }}">Xóa</button>
+                                    </td>
                                 </tr>
                                 @endforeach
                             </tbody>
@@ -96,84 +98,60 @@
 </div>
 @endsection
 @section('js')
-<script src='/Admin/js/TableToJson.min.js'></script>
 <script>
-    $.ajaxSetup({
-    headers: {
-        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-    }
-});
     $(document).ready(function(){
         $("#themTmp").click(function(){
-            var sanPham_id      = $("#sanPham_id").val();
-            var sanPham_view    = $("#sanPham_id option:selected").text();
-            var soLuong         = $("#soLuong").val();
-            var donGiaNhap      = $("#donGiaNhap").val();
-            var nhaCungCap_id   = $("#nhaCungCap_id").val();
-            var nhaCungCap_view = $("#nhaCungCap_id option:selected").text();
-            var is_congNo       = $("#is_congNo").val();
+            const payload = {
+                sanPham_id      : $("#sanPham_id").val(),
+                sanPham_view    : $("#sanPham_id option:selected").text(),
+                soLuong         : $("#soLuong").val(),
+                donGiaNhap      : $("#donGiaNhap").val(),
+                nhaCungCap_id   : $("#nhaCungCap_id").val(),
+                nhaCungCap_view : $("#nhaCungCap_id option:selected").text(),
+                is_congNo       : $("#is_congNo").val(),
+            };
 
-            console.log(sanPham_view);
-            var html = '<tr>';
-            html += '<td>' + sanPham_view + '</td>';
-            html += '<td>' + soLuong + '</td>';
-            html += '<td>' + donGiaNhap + '</td>';
-            html += '<td>' + nhaCungCap_view + '</td>';
-            html += '<td>' + is_congNo + '</td>';
-            html += '<td class="text-center">' + '7' + '</td>';
-            html += '</tr>';
-            $('#myTable > tbody').append(html);
+            axios
+                .post('/admin/tmpChiTietNhapKho', payload)
+                .then((e) => {
+                    if(e.status == 'true'){
+                        var html = '<tr>';
+                        html += '<td>' + sanPham_view + '</td>';
+                        html += '<td>' + soLuong + '</td>';
+                        html += '<td>' + donGiaNhap + '</td>';
+                        html += '<td>' + nhaCungCap_view + '</td>';
+                        html += '<td>' + is_congNo + '</td>';
+                        html += '<td class="text-center">' + '<button class="delete btn btn-danger" data-id="' + e.data +'">Xóa</button>' + '</td>';
+                        html += '</tr>';
+                        $('#myTable > tbody').append(html);
 
-            $.ajax({
-            url: "",
-                type: 'post',
-                data: {
-                    sanPham_id      : sanPham_id,
-                    soLuong         : soLuong,
-                    donGiaNhap      : donGiaNhap,
-                    nhaCungCap_id   : nhaCungCap_id,
-                    is_congNo       : is_congNo,
-                },
-                success: function($status){
-                    if($status == false){
-                        // toastr.error("Trùng thông tin, cho nên sẽ reload!");
+                    } else {
                         location.reload();
                     }
-                },
-            });
+                });
         });
-        function convert()
-        {
-            var myRows = [];
-            var $headers = $("th");
-            var $rows = $("tbody tr").each(function(index) {
-            $cells = $(this).find("td");
-            myRows[index] = {};
-            $cells.each(function(cellIndex) {
-                myRows[index][$($headers[cellIndex]).html()] = $(this).html();
-            });
-            });
-            // Let's put this in the object like you want and convert to JSON (Note: jQuery will also do this for you on the Ajax request)
-            var myObj = {};
-            myObj.myrows = myRows;
 
-            return JSON.stringify(myObj);
-        }
+        $(".delete").click(function(){
+            var idXoa = $(this).data('id');
+            console.log(idXoa);
+            axios
+                .get('/admin/tmpChiTietNhapKho/' + idXoa)
+                .then((e) => {
+                    if(e.data.trangThai == 'success'){
+                        $(this).closest("tr").remove();
+                    } else {
+                        toastr.error('Vui lòng không can thiệp hệ thống!');
+                    }
+                });
+        });
+
         $("#nhapKho").click(function(){
-            var json = convert();
-            var obj = jQuery.parseJSON(json);
-            console.log(obj);
-            console.log(json);
-            $.ajax({
-                url: "",
-                type: 'post',
-                data: obj,
-                success: function(){
-
-                },
-            });
+            axios
+                .get('/admin/nhapKho');
+            $('#myTable > tbody').html("");
+            toastr.success('Đã Nhập Kho Thành Công!!!');
         });
-    });
 
+    });
 </script>
 @endsection

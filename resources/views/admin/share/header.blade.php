@@ -9,5 +9,6 @@ content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no,
 <meta name="description" content="This is an example dashboard created using build-in elements and components.">
 <meta name="msapplication-tap-highlight" content="no">
 <link href="/admin/main.css" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.min.js"></script>
 {{-- {!! htmlScriptTagJsApi() !!} --}}
 @toastr_css

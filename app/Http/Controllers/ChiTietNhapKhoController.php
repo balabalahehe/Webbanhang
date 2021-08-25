@@ -21,7 +21,7 @@ class ChiTietNhapKhoController extends Controller
         return view('admin.nhapKho.index', compact('sanPham', 'nhaCungCap', 'tmpChiTietNhapKho'));
     }
 
-    public function store(Request $request)
+    public function store()
     {
         DB::transaction(function () {
             $uuid = Str::uuid();
@@ -44,11 +44,21 @@ class ChiTietNhapKhoController extends Controller
         });
     }
 
-    public function store2(Request $request)
+    public function show()
     {
-        $data = $request->toArray();
-        foreach($data['myrows'] as $value){
-            dd($value['Tên Sản Phẩm']);
-        }
+        $data = ChiTietNhapKho::select('hoaDon', 'created_at')
+                        ->groupBy('hoaDon', 'created_at')->get();
+
+        dd($data->toArray());
+
+        return view('admin.nhapKho.danhsach');
     }
+
+    // public function store2(Request $request)
+    // {
+    //     $data = $request->toArray();
+    //     foreach($data['myrows'] as $value){
+    //         dd($value['Tên Sản Phẩm']);
+    //     }
+    // }
 }

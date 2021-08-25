@@ -20,5 +20,5 @@ use Illuminate\Broadcasting\PrivateChannel;
 // });
 
 Broadcast::channel('chat', function($user){
-	return true;
+	return $user;
 });
