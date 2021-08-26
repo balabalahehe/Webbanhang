@@ -1,44 +1,32 @@
-<section id="slider" class="slider-element swiper_wrapper" data-autoplay="6000" data-speed="800" data-loop="true" data-grab="true" data-effect="fade" data-arrow="false" style="height: 600px;">
+<!-- block slide top -->
+<div class="block-slide-main slide-opt-1">
 
-    <div class="swiper-container swiper-parent">
-        <div class="swiper-wrapper">
-            <div class="swiper-slide dark">
-                <div class="container">
-                    <div class="slider-caption slider-caption-center">
-                        <div>
-                            <div class="h5 mb-2 font-secondary">Fresh Arrivals</div>
-                            <h2 class="bottommargin-sm text-white">Winter / 2021</h2>
-                            <a href="#" class="button bg-white text-dark button-light">Shop Menswear</a>
-                        </div>
-                    </div>
+    <!-- slide -->
+    <div class="owl-carousel dotsData"
+        data-nav="true"
+        data-dots="true"
+        data-margin="0"
+        data-items='1'
+        data-autoplayTimeout="700"
+        data-autoplay="true"
+        data-loop="true">
+        @foreach ($slideMain as $key => $value)
+            <div class="item item2" style="background-image: url({{$value->url}});" data-dot="{{$key + 1}}">
+                <div class="description">
+                    <span class="title">{{ $value->title }}</span>
+                    <span class="subtitle">{{ $value->subtitle }}</span>
+                    <span class="des">{{ $value->des }}</span>
+                    <a href="{{ $value->href }}" class="btn">{{ $value->btn }}</a>
                 </div>
-                <div class="swiper-slide-bg" style="background-image: url('/Client/images/slider/1.jpg');"></div>
             </div>
-            <div class="swiper-slide dark">
-                <div class="container">
-                    <div class="slider-caption slider-caption-center">
-                        <div>
-                            <div class="h5 mb-2 font-secondary">Summer Collections</div>
-                            <h2 class="bottommargin-sm text-white">Sale 40% Off</h2>
-                            <a href="#" class="button bg-white text-dark button-light">Shop Beachwear</a>
-                        </div>
-                    </div>
-                </div>
-                <div class="swiper-slide-bg" style="background-image: url('/Client/images/slider/3.jpg'); background-position: center 20%;"></div>
-            </div>
-            <div class="swiper-slide dark">
-                <div class="container">
-                    <div class="slider-caption slider-caption-center">
-                        <div>
-                            <h2 class="bottommargin-sm text-white">New Arrivals / 18</h2>
-                            <a href="#" class="button bg-white text-dark button-light">Shop Womenswear</a>
-                        </div>
-                    </div>
-                </div>
-                <div class="swiper-slide-bg" style="background-image: url('/Client/images/slider/2.jpg'); background-position: center 40%;"></div>
-            </div>
-        </div>
-        <div class="swiper-pagination"></div>
-    </div>
+        @endforeach
+    </div> <!-- slide -->
 
-</section><!-- #Slider End -->
+</div><!-- block slide top -->
+
+<!-- banner -->
+<div class="banner-slide">
+    @foreach ($sildeSub as $value)
+        <a href="{{ $value->href }}" class="box-img"><img src="{{$value->url}}" alt="banner-slide"></a>
+    @endforeach
+</div><!-- banner -->

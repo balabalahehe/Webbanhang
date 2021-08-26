@@ -50,12 +50,18 @@ Route::group(['prefix' => 'admin'], function() {
 
     Route::get('/tmpChiTietNhapKho/{id}', 'TmpChiTietNhapKhoController@destroy');
     Route::get('/danhSachNhapKho', 'ChiTietNhapKhoController@show')->name('danhSachNhapKho');
-});
 
 
-Route::get('/', function(){
-    return view('client.master');
+    Route::get('/homeSlide', 'HomeSlideController@create');
+    Route::post('/homeSlide', 'HomeSlideController@store')->name('homeSlideCreate');
+
 });
+
+Route::get('/', 'HomeController@index');
+
+// Route::get('/', function(){
+//     return view('client.master');
+// });
 
 Route::post('/register', 'UserController@store')->name('clientRegister');
 Route::post('/login', 'UserController@login')->name('clientLogin');

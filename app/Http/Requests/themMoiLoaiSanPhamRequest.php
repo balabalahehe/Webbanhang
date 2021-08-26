@@ -24,7 +24,8 @@ class themMoiLoaiSanPhamRequest extends FormRequest
     public function rules()
     {
         return [
-            'tenLoaiSanPham'        =>'required|min:3|max:50|unique:loai_san_phams,tenLoaiSanPham',
+            'tenLoaiSanPham'        => 'required|min:3|max:50|unique:loai_san_phams,tenLoaiSanPham',
+            'hienThi'               => 'required|max:3|min:0'
         ];
     }
     public function messages()

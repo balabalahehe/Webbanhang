@@ -43,10 +43,26 @@ class LoaiSanPhamController extends Controller
      */
     public function store(themMoiLoaiSanPhamRequest $request)
     {
+        if($request->hienThi == 0){
+            $is_view_top = 1;
+            $is_view_left = 1;
+        } elseif($request->hienThi == 1){
+            $is_view_top = 1;
+            $is_view_left = 0;
+        } elseif($request->hienThi == 2){
+            $is_view_top = 0;
+            $is_view_left = 1;
+        } else {
+            $is_view_top = 0;
+            $is_view_left = 0;
+        }
+
         $loaiSanPham = LoaiSanPham::create([
             'tenLoaiSanPham'    => $request->tenLoaiSanPham,
             'slugLoaiSanPham'   => Str::slug($request->tenLoaiSanPham),
             'tinhTrang'         => 1,
+            'is_view_top'       => $is_view_top,
+            'is_view_left'      => $is_view_left,
         ]);
 
         LichSuThaoTac::create([

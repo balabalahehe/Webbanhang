@@ -27,6 +27,15 @@
                                 <input id="tenLoaiSanPhamThemMoi" name="tenLoaiSanPham" class="form-control">
                                 <label id="yeuCauBanDieu" class="text-danger font-italic pl-2"></label>
                             </div>
+                            <div class="position-relative form-group">
+                                <label class="">Hiển Thị</label>
+                                <select name="hienThi" id="exampleSelect" class="form-control">
+                                    <option value=0>Trên Và Bên Trái</option>
+                                    <option value=1>Chỉ Hiển Thị Ở Trên</option>
+                                    <option value=2>Chỉ Hiển Thị Bên Trái</option>
+                                    <option value=3>Không Hiển Thị</option>
+                                </select>
+                            </div>
                             <div class="d-block text-right card-footer">
                                 <button class="mt-1 btn btn-primary">Thêm Mới</button>
                             </div>
@@ -69,6 +78,7 @@
                                 <th class="text-center">#</th>
                                 <th class="text-center">Tên Loại Sản Phẩm</th>
                                 <th class="text-center">Link Loại Sản Phẩm</th>
+                                <th class="text-center">Hiển Thị</th>
                                 <th class="text-center">Tình Trạng</th>
                                 <th class="text-center">Action</th>
                             </tr>
@@ -79,6 +89,11 @@
                                     <th class="text-center"> {{ $key + 1 }}</th>
                                     <td>{{ $value->tenLoaiSanPham }}</td>
                                     <td>{{ $value->slugLoaiSanPham }}</td>
+                                    <td>
+                                        {{$value->is_view_top ? 'Top: Yes':'Top: No'}}
+                                        <br>
+                                        {{$value->is_view_left ? 'Left: Yes':'Left: No'}}
+                                    </td>
                                     @if($value->id < 3)
                                         <td colspan="2" class="text-danger text-center">Hệ thống</td>
                                     @else
