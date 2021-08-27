@@ -176,6 +176,8 @@ return [
         App\Providers\RouteServiceProvider::class,
 
         Yoeunes\Toastr\ToastrServiceProvider::class,
+        Stevebauman\Location\LocationServiceProvider::class,
+
     ],
 
     /*
@@ -228,6 +230,7 @@ return [
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
 
+        'Location' => Stevebauman\Location\Facades\Location::class,
     ],
 
 ];
