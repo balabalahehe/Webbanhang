@@ -58,7 +58,7 @@ Route::group(['prefix' => 'admin'], function() {
 });
 
 Route::get('/', 'HomeController@index');
-Route::get('/location', 'HomeController@index');
+Route::get('/location', 'HomeController@location');
 
 // Route::get('/', function(){
 //     return view('client.master');
