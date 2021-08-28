@@ -19,10 +19,14 @@ class LoaiSanPhamController extends Controller
      */
     public function index()
     {
-        $data = LoaiSanPham::paginate(10);
-        // $data = LoaiSanPham::where('id', '>', 2)->paginate(10);
+        $data = DB::table('loai_san_phams as a')
+                        ->leftJoin('loai_san_phams as b', 'a.idCha', 'b.id')
+                        ->select('a.*', 'b.tenLoaiSanPham as tenLoaiSanPhamCha')
+                        ->paginate(20);
+
+        $dataCha = LoaiSanPham::where('idCha', 0)->where('id', '>', 2)->get();
         $loaiSanPham = null;
-        return view('admin.loaisanpham.index', compact('data', 'loaiSanPham'));
+        return view('admin.loaisanpham.index', compact('data', 'loaiSanPham', 'dataCha'));
     }
 
     /**
@@ -63,6 +67,7 @@ class LoaiSanPhamController extends Controller
             'tinhTrang'         => 1,
             'is_view_top'       => $is_view_top,
             'is_view_left'      => $is_view_left,
+            'idCha'             => $request->idCha,
         ]);
 
         LichSuThaoTac::create([

@@ -37,6 +37,7 @@ class SanPhamController extends Controller
      */
     public function create()
     {
+
         $loaiSanPham = LoaiSanPham::where('tinhTrang', \App\Models\LoaiSanPham::tinhTrang_Open)
                                     ->where('is_delete', false)
                                     ->where('id', '>', 2)
@@ -45,20 +46,15 @@ class SanPhamController extends Controller
         return view('admin.sanpham.create', compact('loaiSanPham'));
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(themMoiSanPhamRequest $request)
     {
         if($request->giaKhuyenMai >= $request->giaBan){
             toastr()->error('Gía khuyến mãi không lớn hơn giá bán');
             return redirect()->back()->withInput($request->all());
         }
-
-        SanPham::create($request->all());
+        for($i = 0; $i < 20; $i++){
+            SanPham::create($request->all());
+        }
         toastr()->success('Thêm mới sản phẩm thành công');
 
         return redirect()->route('indexSanPham');

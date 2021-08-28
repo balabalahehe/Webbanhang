@@ -15,8 +15,10 @@ class LoaiSanPham extends Model
         'is_delete',
         'is_view_top',
         'is_view_left',
+        'idCha',
     ];
 
     const tinhTrang_Open  = 1;
     const tinhTrang_Close = 0;
+
 }
