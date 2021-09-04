@@ -6,6 +6,8 @@ use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\Schema;
 use App\Models\LoaiSanPham;
 use App\Models\homeSlide;
+use Illuminate\Support\Facades\Auth;
+
 class AppServiceProvider extends ServiceProvider
 {
     /**
@@ -25,6 +27,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
+        $user = Auth::guard('user')->user();
         // Schema::defaultStringLength(191);
         $menuTop = LoaiSanPham::where('tinhTrang', 1)
                                 ->where('is_delete', 0)
@@ -40,5 +43,6 @@ class AppServiceProvider extends ServiceProvider
         view()->share('menuLeft', $menuLeft);
         view()->share('slideMain', $slideMain);
         view()->share('sildeSub', $sildeSub);
+        view()->share('user', $user);
     }
 }

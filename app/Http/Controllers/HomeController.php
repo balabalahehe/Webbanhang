@@ -18,7 +18,7 @@ class HomeController extends Controller
 
         // dd($loaiSanPhamCha->toArray(), $loaiSanPhamCon->toArray(), $sanPham->toArray());
 
-        return view('client.index', compact('loaiSanPhamCon', 'sanPham', 'loaiSanPhamCha'));
+        return view('clientnew.index', compact('loaiSanPhamCon', 'sanPham', 'loaiSanPhamCha'));
     }
 
     public function location(Request $request)

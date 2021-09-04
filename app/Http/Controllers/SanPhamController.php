@@ -79,13 +79,27 @@ class SanPhamController extends Controller
         $id = Str::substr($name, $begin, Str::length($name) - $begin);
 
         $sanPham = SanPham::find($id);
+        $danhSachSanPham = SanPham::where('loaiSanPham_id', $sanPham->loaiSanPham_id)
+                                  ->orderByDesc('giaKhuyenMai')
+                                  ->limit(4)
+                                  ->get();
+        // San Phẩm có idLoaiSanPham = 9 ->
+        $timIdCha = LoaiSanPham::find($sanPham->loaiSanPham_id);
+        // Số 3 chính là $timIdCha->idCha
 
+        $loaiSanPham = LoaiSanPham::where('idCha', $timIdCha->idCha)->get();
+        //Tìm tất cả các thằng có id Cha = 3
         if($sanPham){
-            return view('client.san-pham', compact('sanPham'));
+            return view('clientnew.product', compact('sanPham', 'danhSachSanPham', 'loaiSanPham'));
         } else {
             return redirect('/');
         }
 
+    }
+
+    public function test()
+    {
+        return view('clientnew.product');
     }
 
     /**

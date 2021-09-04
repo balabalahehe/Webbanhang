@@ -27,6 +27,7 @@ class themTaiKhoanRequest extends FormRequest
             'fullname'      => 'required|max:50',
             'password'      => 'required',
             'phonenumber'   => 'required|max:15',
+            're-password'   => 'required|same:password',
             'email'         => 'required',
         ];
     }

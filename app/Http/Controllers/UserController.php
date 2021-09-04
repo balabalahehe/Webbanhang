@@ -17,13 +17,14 @@ class UserController extends Controller
         $data['password'] = bcrypt($request->password);
         $hash = (string) Str::uuid();
         $data['hash'] = $hash;
+
         toastr()->success('You are register successfully!');
 
         $details['fullname'] = $data['fullname'];
         $details['hash'] = $hash;
 
-        $mailjob = new sendMail($data['email'], 'mails.activeMail', $details, 'Xác Minh Tài Khoản');
-        dispatch($mailjob);
+        sendMail::dispatch($data['email'], 'mails.activeMail', $details, 'Xác Minh Tài Khoản');
+
         User::create($data);
 
         return redirect('/');
@@ -36,14 +37,11 @@ class UserController extends Controller
         $user = Auth::guard('user')->attempt($data);
         if($user){
             $user = Auth::guard('user')->user();
-            echo 'login thanh cong';
-            // if($user->is_verifymail == 0){
-            //     dd('chua xac minh email');
-            // } else {
-            //     dd('Ok, ban da thoa dieu kien');
-            // }
+            toastr()->success('Login successfully!');
+            return redirect('/');
         } else {
-            dd('login khong thanh cong');
+            toastr()->error('Login errors!');
+            return redirect('/');
         }
     }
 
@@ -67,6 +65,7 @@ class UserController extends Controller
     public function logout()
     {
         Auth::guard('user')->logout();
-        echo 'Logout Thành Công';
+        toastr()->success('Logout successfully!');
+        return redirect('/');
     }
 }

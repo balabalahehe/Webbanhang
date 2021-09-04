@@ -58,6 +58,7 @@ Route::group(['prefix' => 'admin'], function() {
 });
 
 Route::get('/', 'HomeController@index');
+// Route::get('/testSanPham', 'SanPhamController@test');
 Route::get('/san-pham/{name}', 'SanPhamController@show');
 
 Route::get('/location', 'HomeController@location');
@@ -69,7 +70,7 @@ Route::get('/location', 'HomeController@location');
 Route::post('/register', 'UserController@store')->name('clientRegister');
 Route::post('/login', 'UserController@login')->name('clientLogin');
 Route::get('/active/{hash}', 'UserController@active');
-
+Route::get('/logout', 'UserController@logout');
 
 // Route::get('/chat', 'ChatController@index');
 // Route::post('/chat', 'ChatController@create');

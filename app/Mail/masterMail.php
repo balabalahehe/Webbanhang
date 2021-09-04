@@ -25,7 +25,7 @@ class masterMail extends Mailable
 
     public function build()
     {
-        return $this->from('quoclong.sv@gmail.com')
+        return $this->from('laptrinh0409@gmail.com')
                     ->view($this->view, ['data' => $this->data])
                     ->subject($this->subject);
     }
