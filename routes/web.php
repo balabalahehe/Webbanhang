@@ -58,6 +58,8 @@ Route::group(['prefix' => 'admin'], function() {
 });
 
 Route::get('/', 'HomeController@index');
+Route::get('/san-pham/{name}', 'SanPhamController@show');
+
 Route::get('/location', 'HomeController@location');
 
 // Route::get('/', function(){

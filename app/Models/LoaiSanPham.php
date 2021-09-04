@@ -16,6 +16,7 @@ class LoaiSanPham extends Model
         'is_view_top',
         'is_view_left',
         'idCha',
+        'image',
     ];
 
     const tinhTrang_Open  = 1;

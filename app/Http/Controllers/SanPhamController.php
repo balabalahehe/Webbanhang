@@ -8,6 +8,7 @@ use App\Models\SanPham;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Str;
 class SanPhamController extends Controller
 {
     /**
@@ -66,9 +67,25 @@ class SanPhamController extends Controller
      * @param  \App\SanPham  $sanPham
      * @return \Illuminate\Http\Response
      */
-    public function show(SanPham $sanPham)
+    public function show($name)
     {
-        //
+        $begin = 0;
+        for($i = Str::length($name) - 1; $i>=0; $i--){
+            if($name[$i] == '-'){
+                $begin = $i + 1;
+                break;
+            }
+        }
+        $id = Str::substr($name, $begin, Str::length($name) - $begin);
+
+        $sanPham = SanPham::find($id);
+
+        if($sanPham){
+            return view('client.san-pham', compact('sanPham'));
+        } else {
+            return redirect('/');
+        }
+
     }
 
     /**

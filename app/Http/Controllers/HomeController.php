@@ -12,12 +12,13 @@ class HomeController extends Controller
 {
     public function index(Request $request)
     {
-        $menu = LoaiSanPham::where('idCha', 3)->get();
+        $loaiSanPhamCha = LoaiSanPham::where('idCha', 0)->where('id', '>', 2)->where('tinhTrang', 1)->get();
+        $loaiSanPhamCon = LoaiSanPham::where('idCha', '<>', 0)->where('id', '>', 2)->where('tinhTrang', 1)->get();
         $sanPham = SanPham::orderBy('loaiSanPham_id')->get();
 
-        // dd($menu->toArray(), $sanPham->toArray());
+        // dd($loaiSanPhamCha->toArray(), $loaiSanPhamCon->toArray(), $sanPham->toArray());
 
-        return view('client.index', compact('menu', 'sanPham'));
+        return view('client.index', compact('loaiSanPhamCon', 'sanPham', 'loaiSanPhamCha'));
     }
 
     public function location(Request $request)

@@ -44,6 +44,20 @@
                                     @endforeach
                                 </select>
                             </div>
+                            <div class="position-relative form-group">
+                                <div class="input-group">
+                                    <a id="lfm" data-input="thumbnail" data-preview="holder" class="mt-1 btn btn-light">
+                                        Choose
+                                    </a>
+                                    <input id="thumbnail" name="image" class="form-control" type="text" name="filepath">
+                                </div>
+                                <img id="holder" style="margin-top:15px;max-height:100px;">
+                            </div>
+                            <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+                            <script src="/vendor/laravel-filemanager/js/lfm.js"></script>
+                            <script>
+                                 $('#lfm').filemanager('image');
+                            </script>
                             <div class="d-block text-right card-footer">
                                 <button class="mt-1 btn btn-primary">Thêm Mới</button>
                             </div>

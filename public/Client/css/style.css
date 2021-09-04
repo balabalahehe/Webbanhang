@@ -24433,7 +24433,7 @@ img.alignright {
     position: relative;
     background-position: top 15px right 43px;
     background-repeat: no-repeat;
-    background-image: url(../images/icon/index1/actions-floor.png);
+    /* background-image: url(../images/icon/index1/actions-floor.png); */
     border-bottom: 3px solid #f36
 }
 
@@ -41183,7 +41183,7 @@ img.alignright {
     display: none
 }
 @media (max-width:1199px) {
-	
+
 }
 @media (max-width:1024px) {
 	.product-item-opt-1 .product-item-label,
@@ -41213,7 +41213,7 @@ img.alignright {
 	    background-color: #777;
 	}
 	.product-item-opt-7 .product-item-actions .btn,
-	.product-item-opt-8 .product-item-actions .btn-compare, 
+	.product-item-opt-8 .product-item-actions .btn-compare,
 	.product-item-opt-8 .product-item-actions .btn-wishlist {
 		-webkit-animation-name: fadeInRight;
 	    animation-name: fadeInRight;
@@ -41280,7 +41280,7 @@ img.alignright {
 		color: #fff;
     	font-weight: 400;
 	}
-	.block-categori-product-opt9 .col-product:not(.hide-img) .product-detail .product-price, 
+	.block-categori-product-opt9 .col-product:not(.hide-img) .product-detail .product-price,
 	.block-categori-product-opt9 .col-product:not(.hide-img) .product-detail .product-price .old-price {
 		color: #fff;
 	}

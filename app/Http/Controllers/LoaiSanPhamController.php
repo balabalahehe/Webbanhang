@@ -68,6 +68,7 @@ class LoaiSanPhamController extends Controller
             'is_view_top'       => $is_view_top,
             'is_view_left'      => $is_view_left,
             'idCha'             => $request->idCha,
+            'image'             => $request->image,
         ]);
 
         LichSuThaoTac::create([
