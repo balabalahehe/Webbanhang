@@ -61,6 +61,9 @@ Route::get('/', 'HomeController@index');
 // Route::get('/testSanPham', 'SanPhamController@test');
 Route::get('/san-pham/{name}', 'SanPhamController@show');
 
+Route::post('/gio-hang', 'GioHangController@store');
+Route::get('/gio-hang-remove/{id}', 'GioHangController@destroy');
+
 Route::get('/location', 'HomeController@location');
 
 // Route::get('/', function(){

@@ -3,10 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\themMoiSanPhamRequest;
+use App\Models\GioHang;
 use App\Models\LoaiSanPham;
 use App\Models\SanPham;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 class SanPhamController extends Controller
@@ -68,7 +70,12 @@ class SanPhamController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function show($name)
-    {
+    {   
+        $user = Auth::guard('user')->user();
+        $gioHang = [];
+        if($user){
+            $gioHang = GioHang::where('user_id', $user->id)->get();
+        }
         $begin = 0;
         for($i = Str::length($name) - 1; $i>=0; $i--){
             if($name[$i] == '-'){
@@ -90,7 +97,7 @@ class SanPhamController extends Controller
         $loaiSanPham = LoaiSanPham::where('idCha', $timIdCha->idCha)->get();
         //Tìm tất cả các thằng có id Cha = 3
         if($sanPham){
-            return view('clientnew.product', compact('sanPham', 'danhSachSanPham', 'loaiSanPham'));
+            return view('clientnew.product', compact('sanPham', 'danhSachSanPham', 'loaiSanPham', 'user', 'gioHang'));
         } else {
             return redirect('/');
         }

@@ -11,7 +11,6 @@
                 <li ><span><i class="fa fa-phone" aria-hidden="true"></i>00-62-658-658</span></li>
                 <li ><span><i class="fa fa-envelope" aria-hidden="true"></i> Contact us today !</span></li>
             </ul><!-- nav-left -->
-
             <!-- nav-right -->
             <ul class=" nav-right">
                 <li class="dropdown setting">
@@ -118,66 +117,54 @@
                             <span class="cart-icon"></span>
                             <span class="counter qty">
                                 <span class="cart-text">Shopping Cart</span>
-                                <span class="counter-number">6</span>
-                                <span class="counter-label">6 <span>Items</span></span>
-                                <span class="counter-price">$75.00</span>
+                                <span class="counter-number">{{ empty($gioHang) ? '0' :  $gioHang->sum('soLuong') }}</span>
+                                <span class="counter-label">{{ empty($gioHang) ? '0' :  $gioHang->sum('soLuong') }} <span>Items</span></span>
+                                @php
+                                    $total = 0;
+                                    foreach ($gioHang as $value){
+                                        $total += $value->donGia * $value->soLuong;
+                                    }
+                                @endphp
+                                <span class="counter-price">{{ number_format($total, 0) }} đ</span>
                             </span>
                         </a>
                         <div class="dropdown-menu">
                             <form>
                                 <div  class="minicart-content-wrapper" >
                                     <div class="subtitle">
-                                        You have 6 item(s) in your cart
-                                    </div>
+                                        You have {{ empty($gioHang) ? '0' : $gioHang->sum('soLuong') }} item(s) in your cart
+                                    </div> 
                                     <div class="minicart-items-wrapper">
                                         <ol class="minicart-items">
+                                            @foreach ($gioHang as $value)
                                             <li class="product-item">
-                                                <a class="product-item-photo" href="#" title="The Name Product">
-                                                    <img class="product-image-photo" src="/client/images/media/index1/minicart.jpg" alt="The Name Product">
+                                                <a class="product-item-photo" href="#" title="{{ $value->ten_sanPham }}">
+                                                    <img class="product-image-photo" src="{{ $value->hinhAnh_sanPham }}">
                                                 </a>
                                                 <div class="product-item-details">
                                                     <strong class="product-item-name">
-                                                        <a href="#">Donec Ac Tempus</a>
+                                                        <a href="#">{{ $value->ten_sanPham }}</a>
                                                     </strong>
                                                     <div class="product-item-price">
-                                                        <span class="price">61,19 €</span>
+                                                        <span class="price">{{ number_format($value->donGia, 0) }} đ</span>
                                                     </div>
                                                     <div class="product-item-qty">
-                                                        <span class="label">Qty: </span ><span class="number">1</span>
+                                                        <span class="label">Qty: </span ><span class="number">{{ $value->soLuong }}</span>
                                                     </div>
                                                     <div class="product-item-actions">
-                                                        <a class="action delete" href="#" title="Remove item">
+                                                        <a class="action delete removeItem" data-id={{$value->id}} href="#" title="Remove item">
                                                             <span>Remove</span>
                                                         </a>
                                                     </div>
                                                 </div>
                                             </li>
-                                            <li class="product-item">
-                                                <a class="product-item-photo" href="#" title="The Name Product">
-                                                    <img class="product-image-photo" src="/client/images/media/index1/minicart2.jpg" alt="The Name Product">
-                                                </a>
-                                                <div class="product-item-details">
-                                                    <strong class="product-item-name">
-                                                        <a href="#">Donec Ac Tempus</a>
-                                                    </strong>
-                                                    <div class="product-item-price">
-                                                        <span class="price">61,19 €</span>
-                                                    </div>
-                                                    <div class="product-item-qty">
-                                                        <span class="label">Qty: </span ><span class="number">1</span>
-                                                    </div>
-                                                    <div class="product-item-actions">
-                                                        <a class="action delete" href="#" title="Remove item">
-                                                            <span>Remove</span>
-                                                        </a>
-                                                    </div>
-                                                </div>
-                                            </li>
+                                            @endforeach
+                                            
                                         </ol>
                                     </div>
                                     <div class="subtotal">
                                         <span class="label">Total</span>
-                                        <span class="price">$630</span>
+                                        <span class="price">{{ number_format($total, 0) }} đ</span>
                                     </div>
                                     <div class="actions">
                                         <!-- <a class="btn btn-viewcart" href="">
@@ -383,3 +370,22 @@
     </div><!-- header-nav -->
 </header>
 <!-- end HEADER -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script>
+    $(document).ready(function(){
+        $(".removeItem").click(function(){
+            var id = $(this).data('id');
+            console.log('Remove id ' + id);
+            axios
+                .get('/gio-hang-remove/' + id)
+                .then(function(data){
+                    if(data){
+                        toastr.success("Đã xóa khỏi giỏ hàng");
+                        location.reload();
+                    } else {
+                        toastr.error("Có lỗi xảy ra do người dùng!");
+                    }
+                });
+        });
+    });
+</script>

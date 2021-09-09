@@ -47,7 +47,7 @@
                                 </div>
                             </div>
                             <div class="product-code">
-                                Item Code: {{$sanPham->id}}
+                                Item Code: <span id="sanPhamId">{{$sanPham->id}}</span>
                             </div>
                             <div class="product-info-stock">
                                 <div class="stock available">
@@ -78,9 +78,14 @@
                                     </div>
                                     <div class="product-options-bottom clearfix">
                                         <div class="actions">
-                                            <button type="submit" title="Add to Cart" class="action btn-cart">
+                                            @if($user)
+                                                <a id="addToCart" class="btn action btn-cart">Đã Login</a>
+                                            @else
+                                                <a class="btn action btn-cart" href="#login" data-toggle="modal">Add to Cart</a>
+                                            @endif
+                                            {{-- <button type="submit" title="Add to Cart" class="action btn-cart">
                                                 <span>Add to Cart</span>
-                                            </button>
+                                            </button> --}}
                                         </div>
                                     </div>
                                 </form>
@@ -491,6 +496,27 @@
     (function($) {
         "use strict";
         $(document).ready(function() {
+            $("#addToCart").click(function(){
+                var idSanPham = $("#sanPhamId").text();
+                var soLuong   = $("#qty1").val();
+                var payload = {
+                    'id_sanPham'    : idSanPham,
+                    'soLuong'       : soLuong,
+                };
+                console.log(payload);
+                axios
+                    .post('/gio-hang', payload)
+                    .then(function(data){
+                        if(data){
+                            toastr.success('Đã thêm vào giỏ hàng thành công!!!');
+                            location.reload();
+                        } else{
+                            toastr.error('Có lỗi hệ thống!!!');
+                        }
+                    });
+            });
+
+
             $('#slider-range').slider({
                 range: true,
                 min: 0,
