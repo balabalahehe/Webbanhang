@@ -50,7 +50,7 @@ class NhaCungCapController extends Controller
                 'tenNguoiDaiDien'   => $request->tenNguoiDaiDien,
         ]);
 
-        toastr()->success('Ê, Thêm được rồi đó hỉ');
+        toastr()->success('Thêm nhà cung cấp thành công');
 
         return redirect()->Route('indexNhaCungCap');
     }
