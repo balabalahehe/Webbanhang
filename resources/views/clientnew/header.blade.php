@@ -8,8 +8,8 @@
         <div class="container">
             <!-- nav-left -->
             <ul class="nav-left" >
-                <li ><span><i class="fa fa-phone" aria-hidden="true"></i>00-62-658-658</span></li>
-                <li ><span><i class="fa fa-envelope" aria-hidden="true"></i> Contact us today !</span></li>
+                <li ><span><i class="fa fa-phone" aria-hidden="true"></i>0333089832</span></li>
+                <li ><span><i class="fa fa-envelope" aria-hidden="true"></i> Bruce.191@gmail.com </span></li>
             </ul><!-- nav-left -->
             <!-- nav-right -->
             <ul class=" nav-right">
