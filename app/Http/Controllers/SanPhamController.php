@@ -52,10 +52,10 @@ class SanPhamController extends Controller
     public function store(themMoiSanPhamRequest $request)
     {
         if($request->giaKhuyenMai >= $request->giaBan){
-            toastr()->error('Gía khuyến mãi không lớn hơn giá bán');
+            toastr()->error('Giá khuyến mãi không lớn hơn giá bán');
             return redirect()->back()->withInput($request->all());
         }
-        for($i = 0; $i < 20; $i++){
+        for($i = 0; $i < 5; $i++){
             SanPham::create($request->all());
         }
         toastr()->success('Thêm mới sản phẩm thành công');
@@ -109,6 +109,15 @@ class SanPhamController extends Controller
         return view('clientnew.product');
     }
 
+    public function delete($id)
+    {
+        $saPham = SanPham::find($id);
+        $sanPham = SanPham::where('loaiSanPham_id', $id);
+        $sanPham->delete();
+        $loaiSanPham->delete();
+        return redirect('/');
+    }
+
     /**
      * Show the form for editing the specified resource.
      *
@@ -138,8 +147,5 @@ class SanPhamController extends Controller
      * @param  \App\SanPham  $sanPham
      * @return \Illuminate\Http\Response
      */
-    public function destroy(SanPham $sanPham)
-    {
-        //
-    }
+   
 }

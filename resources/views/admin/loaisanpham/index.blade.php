@@ -40,7 +40,7 @@
                                 <select name="idCha" class="form-control">
                                     <option value=0>Root Loại Sản Phẩm</option>
                                     @foreach ($dataCha as $value)
-                                    <option value={{$value->id}}>{{ $value->tenLoaiSanPham }}</option>
+                                        <option value= {{$value->id}} > {{ $value->tenLoaiSanPham }} </option>
                                     @endforeach
                                 </select>
                             </div>
@@ -235,6 +235,7 @@
                 url: '/admin/loaisanpham/deleteType_1/' + idCanXoa,
                 type: 'get',
                 success:function($data){
+                    row.remove();
                     // console.log($data[1]);
                     if($data[1] == true){
                         toastr.success('Đã xóa sản phẩm thành công');
@@ -254,6 +255,7 @@
                 url: '/admin/loaisanpham/deleteType/' + idCanXoa + '/' + 2,
                 type: 'get',
                 success:function($data){
+                    row.remove();
                     // console.log($data[1]);
                     if($data[1] == true){
                         toastr.success('Đã xóa sản phẩm thành công');
@@ -273,15 +275,16 @@
                 url: '/admin/loaisanpham/deleteType/' + idCanXoa + '/' + 1,
                 type: 'get',
                 success:function($data){
+                    row.remove();
                     // console.log($data[1]);
                     if($data[1] == true){
                         toastr.success('Đã xóa sản phẩm thành công');
                     } else {
-                        toastr.error("Ê ku!, chơi rứa đủ rồi!");
+                        toastr.error("Lỗi, vui lòng thử lại !");
                     }
                 },
                 error:function(){
-                    toastr.error('Có lỗi rồi chú ơi');
+                    toastr.error('Lỗi, vui lòng thử lại !');
                 }
             });
         });

@@ -18,7 +18,6 @@
                             </div>
                         </div><!-- image product -->
                     </div>
-
                     <div class="col-sm-6 col-md-6 col-lg-6">
                         <div class="product-info-main">
                             <h1 class="page-title">
@@ -254,8 +253,9 @@
                             <li class="product-item product-item-opt-2">
                                 <div class="product-item-info">
                                     <div class="product-item-photo">
-                                        <a href="" class="product-item-img"><img
-                                                src="{{$value->hinhAnh}}" alt="product name"></a>
+                                        <a href="" class="product-item-img">
+                                            <img src="{{$value->hinhAnh}}" alt="product name">
+                                        </a>
                                         <button class="btn btn-cart" type="button"><span>Add to Cart</span></button>
                                     </div>
                                     <div class="product-item-detail">

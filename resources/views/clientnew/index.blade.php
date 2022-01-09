@@ -575,7 +575,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                 <div class="product-item  product-item-opt-1 ">
+                                <div class="product-item  product-item-opt-1 ">
                                     <div class="product-item-info">
                                         <div class="product-item-photo">
                                             <a class="product-item-img" href=""><img alt="product name" src="/client/images/media/index1/sellers2.jpg"></a>
@@ -632,20 +632,14 @@
                                                     </div>
                                                 </div>
                                             </div>
-
                                         </div>
                                     </div>
                                 </div>
-
                             </div>
                         </div><!-- tab 3-->
-
                     </div>
-
                 </div><!-- block tab products -->
-
             </div>
-
             <div class="col-md-3">
 
                 <!-- block deals  of -->

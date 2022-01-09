@@ -55,7 +55,7 @@
                                     </td>
                                     <td class="text-nowrap">{{ $value->tinhTrang == 1 ? 'Còn kinh doanh' : 'Tạm dừng' }}</td>
                                     <td class="text-nowrap">
-                                        <button class="mb-2 mr-2 btn btn-danger active" data-toggle="modal" data-target="#deleteModel">Xóa</button>
+                                        <button class="xoaSanPham mb-2 mr-2 btn btn-danger active" data-toggle="modal" data-target="#deleteModel">Xóa</button>
                                     </td>
                                 </tr>
                                 @endforeach
@@ -80,13 +80,59 @@
                 </button>
             </div>
             <div class="modal-body">
-                <p class="mb-0">Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled.</p>
+                <input id="idCanXoa">
+                <p class="mb-0">Xác Nhận Xoá Khỏi Danh Sách Sản Phẩm </p>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary">Save changes</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal"> Hủy </button>
+                <button id="xoaSanPham1" type="button" class="btn btn-primary"> Xoá </button>
             </div>
         </div>
     </div>
 </div>
 <!-- Modal Delete -->
+@section('js')
+<script>
+    @if(count($errors) > 0)
+        @foreach($errors->all() as $error)
+            toastr.error("{{ $error }}");
+        @endforeach
+    @endif
+</script>
+<script>
+    $.ajaxSetup({
+    headers: {
+        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+    });
+    $(document).ready(function(){
+        let row;
+        $(".xoaSanPham").click(function(){
+            let id = $(this).data('id');
+            row = $(this).parents('tr');
+            $("#idCanXoa").val(id);
+            console.log('Đã bấm nút xóa loại sản phẩm có id ' + id);
+        })
+
+        $("#xoaSanPham1").click(function(){
+            let idCanXoa = $("#idCanXoa").val();
+            $.ajax({
+                url: '/admin/sanpham/xoaSanPham1/' + idCanXoa,
+                type: 'get',
+                success:function($data){
+                    row.remove();
+                    // console.log($data[1]);
+                    if($data[1] == true){
+                        toastr.success('Đã xóa sản phẩm thành công');
+                    } else {
+                        toastr.error("Ê ku!, chơi rứa đủ rồi!");
+                    }
+                },
+                error:function(){
+                    toastr.error('Có lỗi rồi chú ơi');
+                }
+            });
+        });
+    })
+</script>
+@endsection

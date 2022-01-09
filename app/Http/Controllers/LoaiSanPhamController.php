@@ -108,7 +108,7 @@ class LoaiSanPhamController extends Controller
             $data = LoaiSanPham::paginate(10);
             return view('admin.loaisanpham.index', compact('data', 'loaiSanPham'));
         } else {
-            toastr()->error('Đi đâu thế bạn???');
+            toastr()->error('Thao tác bị lỗi !');
             return redirect()->route('indexLoaiSanPham');
         }
     }

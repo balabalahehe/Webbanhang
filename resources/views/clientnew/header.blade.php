@@ -172,6 +172,7 @@
                                         </a> -->
                                         <button class="btn btn-checkout" type="button" title="Check Out">
                                             <span>Checkout</span>
+                                             
                                         </button>
                                     </div>
                                 </div>

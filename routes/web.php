@@ -41,6 +41,7 @@ Route::group(['prefix' => 'admin'], function() {
         Route::get('/create', 'SanPhamController@create')->name('viewThemSanPham');
         Route::post('/create', 'SanPhamController@store')->name('themSanPham');
         Route::get('/', 'SanPhamController@index')->name('indexSanPham');
+        Route::get('/delete/{id}', 'SanPhamController@delete')->name('xoaSanPham1');
     });
 
     Route::get('/nhapKhoSanPham', 'ChiTietNhapKhoController@index')->name('nhapKhoSanPham');
